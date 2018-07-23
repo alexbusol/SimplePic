@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //MARK: - Configuring ParseSDK with Heroku Server
+        
+        let parseConfig = ParseClientConfiguration {
+            
+            //getting access to Heroku using our AppID and MasterKey
+            $0.applicationId = "SimplePic"
+            $0.clientKey = "instakey123888399212"
+            $0.server = "http://simple-pic.herokuapp.com/parse"
+        }
+        
+        Parse.initialize(with: parseConfig)
         return true
     }
 

@@ -26,6 +26,9 @@
 		E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A0AB202106462000C9625F /* SignInViewController.swift */; };
 		E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A0AB222106464000C9625F /* SignUpViewController.swift */; };
 		E6A0AB252106465C00C9625F /* ResetPWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A0AB242106465C00C9625F /* ResetPWViewController.swift */; };
+		E6B402EF2107998800B4D656 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */; };
+		E6B402F1210799AC00B4D656 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402F0210799AC00B4D656 /* HeaderView.swift */; };
+		E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		E6A0AB202106462000C9625F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		E6A0AB222106464000C9625F /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E6A0AB242106465C00C9625F /* ResetPWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPWViewController.swift; sourceTree = "<group>"; };
+		E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
+		E6B402F0210799AC00B4D656 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,9 @@
 				E6A0AB202106462000C9625F /* SignInViewController.swift */,
 				E6A0AB222106464000C9625F /* SignUpViewController.swift */,
 				E6A0AB242106465C00C9625F /* ResetPWViewController.swift */,
+				E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */,
+				E6B402F0210799AC00B4D656 /* HeaderView.swift */,
+				E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */,
 			);
 			path = SimplePic;
 			sourceTree = "<group>";
@@ -200,7 +209,10 @@
 				E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */,
 				E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */,
 				E62345CF21061DEB009B3D80 /* AppDelegate.swift in Sources */,
+				E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */,
 				E6A0AB252106465C00C9625F /* ResetPWViewController.swift in Sources */,
+				E6B402EF2107998800B4D656 /* HomeScreenViewController.swift in Sources */,
+				E6B402F1210799AC00B4D656 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

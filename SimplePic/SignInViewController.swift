@@ -36,7 +36,7 @@ class SignInViewController: UIViewController {
         //The server will check if the username and password are correct
         PFUser.logInWithUsername(inBackground: usernameTextField.text!, password: passwordTextField.text!) { (user, error) -> Void in
             if error == nil {
-                
+                print("Sign in successful")
                 //If the login was successful, remember the user
                 UserDefaults.standard.set(user!.username, forKey: "username")
                 UserDefaults.standard.synchronize()

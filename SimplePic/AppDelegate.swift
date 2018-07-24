@@ -19,15 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //MARK: - Configuring ParseSDK with Heroku Server
+        //UPDATE: will use back4app instead to enable password reset functionality
         
         let parseConfig = ParseClientConfiguration {
             
             //getting access to Heroku using our AppID and MasterKey
-            $0.applicationId = "SimplePic"
-            $0.clientKey = "instakey123888399212"
-            $0.server = "http://simple-pic.herokuapp.com/parse"
+            $0.applicationId = "h7Q0MzrvScGQnf2BZQH1O7GY6kiHPbFsmQpouNMu"
+            $0.clientKey = "nb9rHXoYYO9ibGfpGrpJA8RAJEPf7BtGAcT8S0Vw"
+            $0.server = "https://parseapi.back4app.com"
         }
-        
+      
         Parse.enableLocalDatastore()
         PFAnalytics.trackAppOpened(launchOptions: launchOptions)
 

@@ -18,6 +18,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var forgotPWButton: UIButton!
     
+    @IBOutlet weak var welcomeLabel: UILabel!
     
     @IBAction func signInClicked(_ sender: UIButton) {
         print("clicked sign in")
@@ -58,24 +59,24 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Assigning constraints programmatically
+        welcomeLabel.frame = CGRect(x: 10, y: 80, width: self.view.frame.size.width - 20, height: 111)
+        usernameTextField.frame = CGRect(x: 10, y: welcomeLabel.frame.origin.y + 120, width: self.view.frame.size.width - 20, height: 30)
+        passwordTextField.frame = CGRect(x: 10, y: usernameTextField.frame.origin.y + 40, width: self.view.frame.size.width - 20, height: 30)
+        forgotPWButton.frame = CGRect(x: 10, y: passwordTextField.frame.origin.y + 30, width: self.view.frame.size.width - 20, height: 30)
+        
+        signInButton.frame = CGRect(x: 20, y: forgotPWButton.frame.origin.y + 40, width: self.view.frame.size.width / 4, height: 30)
+        signInButton.layer.cornerRadius = signInButton.frame.size.width / 20
+        
+        signUpButton.frame = CGRect(x: self.view.frame.size.width - self.view.frame.size.width / 4 - 20, y: signInButton.frame.origin.y, width: self.view.frame.size.width / 4, height: 30)
+        signUpButton.layer.cornerRadius = signUpButton.frame.size.width / 20
+        
 
-        // Do any additional setup after loading the view.
+        let background = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        background.image = UIImage(named: "bg.jpg")
+        background.layer.zPosition = -1
+        self.view.addSubview(background)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse //for communicating with the server
 
 class SignUpViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
@@ -113,11 +114,49 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         
         //show an alert if the two passwords dont match
         if passwordTextfField.text != repeatPWTextfField.text {
-            let alert = UIAlertController(title: "Passwords don't match", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
-            let alertButton = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+            let alert = UIAlertController(title: "Passwords don't match", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            let alertButton = UIAlertAction(title: "Try again", style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(alertButton)
             self.present(alert, animated: true, completion: nil)
         }
+        
+        //MARK: - Recording the new user info on the server using Parse
+        let newUser = PFUser()
+        newUser.username = usernameTextfField.text?.lowercased()
+        newUser.email = userEmailTextField.text?.lowercased()
+        newUser.password = passwordTextfField.text
+        newUser["FullName"] = fullNameTextfField.text?.lowercased()
+        newUser["Bio"] = bioTextfField.text?.lowercased()
+        
+        //adding user's personal website if it was entered
+        if let website = websiteTextfField.text {
+            newUser["website"] = website
+        }
+        //this information isn't required, but users will be able to edit it once they go to "edit profile" in their account
+        newUser["PhoneNumber"] = ""
+        newUser["Gender"] = ""
+        //convert the selected avatar to JPEG and send it to the server
+        let avatar = UIImageJPEGRepresentation(userAvatar.image!, 0.5)
+        let avatarToSend = PFFile(name: "Avatar.jpg", data: avatar!)
+        newUser["avatar"] = avatarToSend
+        
+        //MARK: - Send the recorded data to the server
+        newUser.signUpInBackground { (success, error) -> Void in
+            if success {
+                print("new user was registered")
+                
+                // IMPORTANT: memorize the user, so that he doesnt have to login again after relaunching the app
+                
+            } else {
+                //tell the user that registration failed
+                let alert = UIAlertController(title: "Registration Failed", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                let alertButton = UIAlertAction(title: "Try again", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(alertButton)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+        
     }
     
     @IBAction func cancelClicked(_ sender: UIButton) {

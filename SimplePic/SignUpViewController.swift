@@ -146,6 +146,12 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
                 print("new user was registered")
                 
                 // IMPORTANT: memorize the user, so that he doesnt have to login again after relaunching the app
+                UserDefaults.standard.set(newUser.username, forKey: "username")
+                UserDefaults.standard.synchronize()
+                
+                // use the login method in App delegate to login the user
+                let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate //share app delegate with the current view controller
+                appDelegate.login()
                 
             } else {
                 //tell the user that registration failed

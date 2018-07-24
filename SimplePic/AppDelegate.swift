@@ -28,6 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             $0.server = "http://simple-pic.herokuapp.com/parse"
         }
         
+        Parse.enableLocalDatastore()
+        PFAnalytics.trackAppOpened(launchOptions: launchOptions)
+
+        login()
+
         Parse.initialize(with: parseConfig)
         return true
     }
@@ -53,7 +58,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    //MARK: - Remember user after logging in
+    func login() {
+        let username : String? = UserDefaults.standard.string(forKey: "username") //retrieve the user info from the user defaults. only works if there's info there already
+        
+        if username != nil {
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let myTabBar = storyboard.instantiateViewController(withIdentifier: "tabBar") as! UITabBarController //showing tab bar if the user is logged in
+            window?.rootViewController = myTabBar
+        }
+    }
 }
 

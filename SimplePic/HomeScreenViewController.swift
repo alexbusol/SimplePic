@@ -127,7 +127,6 @@ class HomeScreenViewController: UICollectionViewController {
         
         
         //MARK: - 2. Count the number of posts, followers, and following
-        //creating a new class named posts in the database
         let posts = PFQuery(className: "posts")
         posts.whereKey("username", equalTo: PFUser.current()!.username!)
         posts.countObjectsInBackground (block: { (count, error) -> Void in
@@ -137,17 +136,18 @@ class HomeScreenViewController: UICollectionViewController {
         })
         
         
-        //creating a new class named followers in the database
-        let followers = PFQuery(className: "follow") //creating a new class named posts in the database
+       
+        let followers = PFQuery(className: "follow")
         followers.whereKey("followers", equalTo: PFUser.current()!.username!)
         followers.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followersNum.text = "\(count)"
             }
         })
+
         
-        //creating a new class named following in the database
-        let following = PFQuery(className: "follow") //creating a new class named posts in the database
+        
+        let following = PFQuery(className: "follow") 
         following.whereKey("following", equalTo: PFUser.current()!.username!)
         following.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
@@ -204,10 +204,10 @@ class HomeScreenViewController: UICollectionViewController {
         user = PFUser.current()!.username!
         showCategory = "following"
         //make a reference to the followersViewController
-        let followings = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
+        let followingVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
         
         //send the user to the followersViewController
-        self.navigationController?.pushViewController(followings, animated: true)
+        self.navigationController?.pushViewController(followingVC, animated: true)
     }
     
 

@@ -410,7 +410,7 @@
         <!--Guest View Controller-->
         <scene sceneID="6pa-Ou-R26">
             <objects>
-                <collectionViewController storyboardIdentifier="HomeScreenViewController" id="7dw-Nt-hBl" customClass="GuestViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="GuestViewController" id="7dw-Nt-hBl" customClass="GuestViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="XpS-iM-2lt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

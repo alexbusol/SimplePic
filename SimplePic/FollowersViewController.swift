@@ -138,7 +138,7 @@ class FollowersViewController: UITableViewController {
         return usernameArray.count
     }
     
-    //place the avatar and username into the table cells
+    //MARK: - place the avatar and username into the table cells
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! FollowerCell
         tableCell.username.text = usernameArray[indexPath.row]
@@ -149,6 +149,27 @@ class FollowersViewController: UITableViewController {
                 print("Unable to place the data into table cells \(error!.localizedDescription)")
             }
         }
+        //change the follow button depending on whether the current user follows the follower
+        let isFollowing = PFQuery(className: "follow")
+        isFollowing.whereKey("follower", equalTo: PFUser.current()?.username)
+        isFollowing.whereKey("following", equalTo: tableCell.username.text) //check if the current user follows the follower
+        isFollowing.countObjectsInBackground (block: { (count, error) -> Void in
+            if error == nil {
+                if count == 0 { //if current user is not following the follower, set the botton title to follow
+                    tableCell.followButton.setTitle("Follow", for: UIControlState())
+                    tableCell.followButton.backgroundColor = .lightGray
+                } else {
+                    tableCell.followButton.setTitle("Following", for: UIControlState())
+                    tableCell.followButton.backgroundColor = UIColor.blue
+                }
+            }
+        })
+        
+        //hide the follow button for the current user
+        if tableCell.username.text == PFUser.current()?.username {
+            tableCell.followButton.isHidden = true
+        }
+        
         return tableCell
     }
 }

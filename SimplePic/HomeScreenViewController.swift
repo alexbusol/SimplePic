@@ -150,46 +150,61 @@ class HomeScreenViewController: UICollectionViewController {
                 header.followingNum.text = "\(count)"
             }
         })
+        
+        
+        //MARK: - 3. Add the ability to tap on posts, followers, and following
+        let postsTap = UITapGestureRecognizer(target: self, action: #selector(HomeScreenViewController.postsTap)) //declare gesture recognizer
+        postsTap.numberOfTapsRequired = 1 //specifying how many taps to activate
+        header.postsNum.isUserInteractionEnabled = true //enabling user interaction
+        header.postsNum.addGestureRecognizer(postsTap) //assigning the tap gesture recognizer to the posts number label in the header view
+      
+        let followersTap = UITapGestureRecognizer(target: self, action: #selector(HomeScreenViewController.followersTap))
+        followersTap.numberOfTapsRequired = 1
+        header.followersNum.isUserInteractionEnabled = true
+        header.followersNum.addGestureRecognizer(followersTap)
+        
+        let followingsTap = UITapGestureRecognizer(target: self, action: #selector(HomeScreenViewController.followingsTap))
+        followingsTap.numberOfTapsRequired = 1
+        header.followingNum.isUserInteractionEnabled = true
+        header.followingNum.addGestureRecognizer(followingsTap)
+        
         return header
     }
-/*
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     
-        // Configure the cell
+    //MARK: - Methods handling posts, followers and following taps
     
-        return cell
+    //when posts are tapped, we down to the bottom, filling the entire screen with posts only
+    @objc func postsTap() {
+        if !pictureArray.isEmpty {
+            let indexToScroll = IndexPath(item: 0, section: 0) //index at the top of the picture grid
+            self.collectionView?.scrollToItem(at: indexToScroll, at: UICollectionViewScrollPosition.top, animated: true) //activating the scroll
+        }
     }
-*/
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
+    //shows all user's followers
+    @objc func followersTap() {
+        
+        user = PFUser.current()!.username! //accessing the global variable 'user' from the FollowersViewController
+        showCategory = "followers"
+        
+        //make a reference to the followersViewController
+        let followersVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
+        
+  
+        self.navigationController?.pushViewController(followersVC, animated: true)
     }
-    */
+    
+    //shows all the people following the user
+    @objc func followingsTap() {
+        
+        user = PFUser.current()!.username!
+        showCategory = "followings"
+        //make a reference to the followersViewController
+        let followings = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
+        
+        //send the user to the followersViewController
+        self.navigationController?.pushViewController(followings, animated: true)
+    }
+    
 
 }

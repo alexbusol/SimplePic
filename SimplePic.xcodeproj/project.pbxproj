@@ -23,6 +23,8 @@
 		E62345F421061EE2009B3D80 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F321061EE2009B3D80 /* SystemConfiguration.framework */; };
 		E62345F721061FD1009B3D80 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F521061FD0009B3D80 /* Bolts.framework */; };
 		E62345F821061FD1009B3D80 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F621061FD1009B3D80 /* Parse.framework */; };
+		E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D20732108A105000DF34A /* FollowersViewController.swift */; };
+		E67D20762108A136000DF34A /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D20752108A136000DF34A /* FollowerCell.swift */; };
 		E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A0AB202106462000C9625F /* SignInViewController.swift */; };
 		E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A0AB222106464000C9625F /* SignUpViewController.swift */; };
 		E6A0AB252106465C00C9625F /* ResetPWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A0AB242106465C00C9625F /* ResetPWViewController.swift */; };
@@ -50,6 +52,8 @@
 		E62345F321061EE2009B3D80 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E62345F521061FD0009B3D80 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		E62345F621061FD1009B3D80 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		E67D20732108A105000DF34A /* FollowersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
+		E67D20752108A136000DF34A /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		E6A0AB202106462000C9625F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		E6A0AB222106464000C9625F /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E6A0AB242106465C00C9625F /* ResetPWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPWViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */,
 				E6B402F0210799AC00B4D656 /* HeaderView.swift */,
 				E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */,
+				E67D20732108A105000DF34A /* FollowersViewController.swift */,
+				E67D20752108A136000DF34A /* FollowerCell.swift */,
 			);
 			path = SimplePic;
 			sourceTree = "<group>";
@@ -208,8 +214,10 @@
 			files = (
 				E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */,
 				E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */,
+				E67D20762108A136000DF34A /* FollowerCell.swift in Sources */,
 				E62345CF21061DEB009B3D80 /* AppDelegate.swift in Sources */,
 				E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */,
+				E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */,
 				E6A0AB252106465C00C9625F /* ResetPWViewController.swift in Sources */,
 				E6B402EF2107998800B4D656 /* HomeScreenViewController.swift in Sources */,
 				E6B402F1210799AC00B4D656 /* HeaderView.swift in Sources */,

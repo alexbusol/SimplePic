@@ -73,7 +73,7 @@ class FollowersViewController: UITableViewController {
                         for object in objects! {
                             self.usernameArray.append(object.object(forKey: "username") as! String)
                             self.avatarArray.append(object.object(forKey: "avatar") as! PFFile)
-                            self.tableView.reloadData()
+                            self.tableView.reloadData() //reload the table view to show the most up to date info
                         }
                     } else {
                         print("Unable to pull the followers data from the USER CLASS of the DB \(error!.localizedDescription)")
@@ -120,7 +120,7 @@ class FollowersViewController: UITableViewController {
                         for object in objects! {
                             self.usernameArray.append(object.object(forKey: "username") as! String)
                             self.avatarArray.append(object.object(forKey: "avatar") as! PFFile)
-                            self.tableView.reloadData()
+                            self.tableView.reloadData() //reload the table view to show the most up to date info
                         }
                     } else {
                         print("Unable to pull the following data from the USER CLASS of the DB \(error!.localizedDescription)")
@@ -133,8 +133,22 @@ class FollowersViewController: UITableViewController {
         }
         
     }
-
+    //show as many cells as there are users in the followers/following categories
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usernameArray.count //show as many cells as there are users in the followers/following categories
+        return usernameArray.count
+    }
+    
+    //place the avatar and username into the table cells
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! FollowerCell
+        tableCell.username.text = usernameArray[indexPath.row]
+        avatarArray[indexPath.row].getDataInBackground { (data, error) -> Void in
+            if error == nil {
+                tableCell.userImage.image = UIImage(data: data!)
+            } else {
+                print("Unable to place the data into table cells \(error!.localizedDescription)")
+            }
+        }
+        return tableCell
     }
 }

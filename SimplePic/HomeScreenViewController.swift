@@ -138,7 +138,7 @@ class HomeScreenViewController: UICollectionViewController {
         
        
         let followers = PFQuery(className: "follow")
-        followers.whereKey("followers", equalTo: PFUser.current()!.username!)
+        followers.whereKey("following", equalTo: PFUser.current()!.username!)
         followers.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followersNum.text = "\(count)"
@@ -148,7 +148,7 @@ class HomeScreenViewController: UICollectionViewController {
         
         
         let following = PFQuery(className: "follow") 
-        following.whereKey("following", equalTo: PFUser.current()!.username!)
+        following.whereKey("follower", equalTo: PFUser.current()!.username!)
         following.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followingNum.text = "\(count)"

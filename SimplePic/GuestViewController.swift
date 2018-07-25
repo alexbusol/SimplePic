@@ -171,10 +171,10 @@ class GuestViewController: UICollectionViewController {
         followQuery.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 if count == 0 {
-                    header.profileActionButton.setTitle("FOLLOW", for: UIControlState())
+                    header.profileActionButton.setTitle("Follow", for: UIControlState())
                     header.profileActionButton.backgroundColor = .lightGray
                 } else {
-                    header.profileActionButton.setTitle("FOLLOWING", for: UIControlState())
+                    header.profileActionButton.setTitle("Following", for: UIControlState())
                     header.profileActionButton.backgroundColor = .blue
                 }
             } else {
@@ -197,7 +197,7 @@ class GuestViewController: UICollectionViewController {
         
  
         let followers = PFQuery(className: "follow") 
-        followers.whereKey("followers", equalTo: guestUsername.last!)
+        followers.whereKey("following", equalTo: guestUsername.last!)
         followers.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followersNum.text = "\(count)"
@@ -206,7 +206,7 @@ class GuestViewController: UICollectionViewController {
         
        
         let following = PFQuery(className: "follow")
-        following.whereKey("following", equalTo: guestUsername.last!)
+        following.whereKey("follower", equalTo: guestUsername.last!)
         following.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followingNum.text = "\(count)"

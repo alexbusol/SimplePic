@@ -43,7 +43,7 @@ class FollowersViewController: UITableViewController {
         //query the database for the current user's followers
         
         let whoFollows = PFQuery(className: "follow")
-        whoFollows.whereKey("follower", equalTo: "user") //asking the DB to show the followers for current user
+        whoFollows.whereKey("following", equalTo: user) //asking the DB to show the followers for current user
         whoFollows.findObjectsInBackground (block: { (objects, error) -> Void in
             //if there's no error retrieving the followers
             if error == nil {
@@ -89,7 +89,7 @@ class FollowersViewController: UITableViewController {
     func loadFollowing() {
         let whoFollowing = PFQuery(className: "follow")
         
-        whoFollowing.whereKey("following", equalTo: "user") //asking the DB to get the followings from the follow class for current user
+        whoFollowing.whereKey("follower", equalTo: user) //asking the DB to get the followings from the follow class for current user
         whoFollowing.findObjectsInBackground { (objects, error) in
             //if there's no error retrieving the followings
             if error == nil {

@@ -25,7 +25,11 @@ class HomeScreenViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = PFUser.current()?.username?.uppercased() //showing the current user's username in the navbar
+        //allow the user to scroll downward even if there's not enough images in the view
+        //the view bounces back after the user stops scrolling
+        self.collectionView?.alwaysBounceVertical = true
+        //showing the current user's username in the navbar
+        self.navigationItem.title = PFUser.current()?.username?.uppercased()
         
         //implementing pull to refresh
         toRefresh = UIRefreshControl()

@@ -119,7 +119,10 @@ class FollowersViewController: UITableViewController {
                         //assign the data received to the username and avatar storage for the table cells
                         for object in objects! {
                             self.usernameArray.append(object.object(forKey: "username") as! String)
-                            self.avatarArray.append(object.object(forKey: "avatar") as! PFFile)
+                            
+                            if let avatarReceived = object.object(forKey: "avatar") as? PFFile {
+                                self.avatarArray.append(avatarReceived)
+                            } 
                             self.tableView.reloadData() //reload the table view to show the most up to date info
                         }
                     } else {

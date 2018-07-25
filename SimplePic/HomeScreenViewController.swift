@@ -120,7 +120,22 @@ class HomeScreenViewController: UICollectionViewController {
             }
         } else {
             print("avatar is empty")
-            header.userImage.image = #imageLiteral(resourceName: "addAv") //setting the default "add avatar" image if the user didnt upload an avatar during signup
+            //setting the default "add avatar" image if the user didnt upload an avatar during signup
+            header.userImage.image = #imageLiteral(resourceName: "addAv")
+            //making sure convert the default avatar to JPEG and send it to the server
+            let currentUser = PFUser.current()
+            let avatar = UIImageJPEGRepresentation(header.userImage.image!, 0.5)
+            let avatarToSend = PFFile(name: "Avatar.jpg", data: avatar!)
+            currentUser!["avatar"] = avatarToSend
+            
+            //saving our changes using Parse's saveInBackgound method
+            currentUser?.saveInBackground(block: { (success, error) in
+                if success {
+                    print("avatar updated to default image")
+                } else {
+                    print("Failed to update the avatar. \(error?.localizedDescription)")
+                }
+            })
         }
         
         header.profileActionButton.setTitle("Edit Profile", for: UIControlState())

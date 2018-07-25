@@ -12,7 +12,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInViewController" id="BYZ-38-t0r" customClass="SignInViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -401,7 +401,13 @@
                             <outlet property="delegate" destination="Euj-C8-5mu" id="hYj-jl-gBT"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="uH0-aS-vOK"/>
+                    <navigationItem key="navigationItem" id="uH0-aS-vOK">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="MU4-62-kKQ">
+                            <connections>
+                                <action selector="logout_pressed:" destination="Euj-C8-5mu" id="Njs-hG-Bqc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qEM-jO-AId" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

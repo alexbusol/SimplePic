@@ -210,5 +210,24 @@ class HomeScreenViewController: UICollectionViewController {
         self.navigationController?.pushViewController(followingVC, animated: true)
     }
     
-
+    
+    //MARK: - Logout the user
+    @IBAction func logout_pressed(_ sender: UIBarButtonItem) {
+        PFUser.logOutInBackground { (error) in
+            if error == nil {
+                print("logout successful")
+                //deleting the user's login from the user defaults
+                UserDefaults.standard.removeObject(forKey: "username")
+                UserDefaults.standard.synchronize()
+                
+                //redirecting the user to the SignInViewController
+                let signInVC = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+                let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.window?.rootViewController = signInVC
+            } else {
+                print("There was an error logging out. \(error?.localizedDescription)")
+            }
+        }
+    }
+    
 }

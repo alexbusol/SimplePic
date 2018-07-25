@@ -28,6 +28,8 @@ class GuestViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.collectionView?.backgroundColor = .white
+        
         //allow the user to scroll downward even if there's not enough images in the view
         //the view bounces back after the user stops scrolling
         self.collectionView?.alwaysBounceVertical = true

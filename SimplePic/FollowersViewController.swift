@@ -172,4 +172,19 @@ class FollowersViewController: UITableViewController {
         
         return tableCell
     }
+    //MARK: - Handling tapping on a user in followers/following
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let tableCell = tableView.cellForRow(at: indexPath) as! FollowerCell
+        
+        //if user taps on himself, go to homeview. else, go to another user's page
+        if tableCell.username.text! == PFUser.current()!.username {
+            let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+            self.navigationController?.pushViewController(homeVC, animated: true)
+        } else { //go to another user's profile
+            //pass the username of the target profile to the GuestViewController's global array guestUsername.
+            guestUsername.append(tableCell.username.text!)
+            let guestVC = self.storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
+            self.navigationController?.pushViewController(guestVC, animated: true)
+        }
+    }
 }

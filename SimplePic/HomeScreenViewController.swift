@@ -31,9 +31,10 @@ class HomeScreenViewController: UICollectionViewController {
         toRefresh = UIRefreshControl()
         toRefresh.addTarget(self, action: #selector(HomeScreenViewController.refresh), for: UIControlEvents.valueChanged)
         collectionView?.addSubview(toRefresh)
-        
+    
         //load the posts when open the homescreen
         loadPosts()
+        
     }
     
     @objc func refresh() {
@@ -103,11 +104,23 @@ class HomeScreenViewController: UICollectionViewController {
         header.websiteTextField.sizeToFit()
         header.bioLabel.text = PFUser.current()?.object(forKey: "Bio") as? String
         header.bioLabel.sizeToFit() //making sure that the textview size matches the website length
-        let currentAvatar = PFUser.current()?.object(forKey: "avatar") as! PFFile
-        currentAvatar.getDataInBackground { (data, error) -> Void in
-            header.userImage.image = UIImage(data: data!)
+        
+        //preventing crash if the avatar is empty
+        if let currentAvatar = PFUser.current()?.object(forKey: "avatar") as? PFFile {
+            currentAvatar.getDataInBackground { (data, error) -> Void in
+                if (error == nil) {
+                    header.userImage.image = UIImage(data: data!)
+                } else {
+                    print("unable to get avatar \(error)")
+                }
+            }
+        } else {
+            print("avatar is empty")
+            header.userImage.image = #imageLiteral(resourceName: "addAv") //setting the default "add avatar" image if the user didnt upload an avatar during signup
         }
+        
         header.profileActionButton.setTitle("Edit Profile", for: UIControlState())
+        
         
         //MARK: - 2. Count the number of posts, followers, and following
         //creating a new class named posts in the database
@@ -118,6 +131,7 @@ class HomeScreenViewController: UICollectionViewController {
                 header.postsNum.text = "\(count)"
             }
         })
+        
         
         //creating a new class named followers in the database
         let followers = PFQuery(className: "follow") //creating a new class named posts in the database

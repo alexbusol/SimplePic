@@ -275,7 +275,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="18a-fG-sq0">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="18a-fG-sq0">
                             <size key="itemSize" width="138" height="138"/>
                             <size key="headerReferenceSize" width="50" height="226"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>

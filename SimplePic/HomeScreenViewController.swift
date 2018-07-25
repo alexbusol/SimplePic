@@ -135,7 +135,7 @@ class HomeScreenViewController: UICollectionViewController {
         
         //creating a new class named followers in the database
         let followers = PFQuery(className: "follow") //creating a new class named posts in the database
-        followers.whereKey("following", equalTo: PFUser.current()!.username!)
+        followers.whereKey("followers", equalTo: PFUser.current()!.username!)
         followers.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followersNum.text = "\(count)"
@@ -144,7 +144,7 @@ class HomeScreenViewController: UICollectionViewController {
         
         //creating a new class named following in the database
         let following = PFQuery(className: "follow") //creating a new class named posts in the database
-        following.whereKey("follower", equalTo: PFUser.current()!.username!)
+        following.whereKey("following", equalTo: PFUser.current()!.username!)
         following.countObjectsInBackground (block: { (count, error) -> Void in
             if error == nil {
                 header.followingNum.text = "\(count)"
@@ -198,7 +198,7 @@ class HomeScreenViewController: UICollectionViewController {
     @objc func followingsTap() {
         
         user = PFUser.current()!.username!
-        showCategory = "followings"
+        showCategory = "following"
         //make a reference to the followersViewController
         let followings = self.storyboard?.instantiateViewController(withIdentifier: "FollowersViewController") as! FollowersViewController
         

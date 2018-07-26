@@ -51,10 +51,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         //tap to hide keyboard
         //adding the gesture recognizer to the view to hide the keyboard if any place on the screen is tapped
-        let hideKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.hideKeyboard(_:)))
-        hideKeyboardTap.numberOfTapsRequired = 1
+        let screenTapped = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.hideKeyboardAfterTap(_:)))
+        screenTapped.numberOfTapsRequired = 1
         self.view.isUserInteractionEnabled = true
-        self.view.addGestureRecognizer(hideKeyboardTap)
+        self.view.addGestureRecognizer(screenTapped)
         
         //tap to choose image
         //adding gesture recognizer to the image view to open image picker/camera if the image is tapped
@@ -71,9 +71,17 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     //MARK: - Enabling ScrollView only if the keyboard is showing
     
-    //called when the keyboard needs to be hidden
-    @objc func hideKeyboard(_ notification: Notification) {
+  
+    //hiding the keyboard after the screen was tapped
+    @objc func hideKeyboardAfterTap(_ recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
+    }
+    
+    //returning the window to the previous size
+    @objc func hideKeyboard(_ notification: Notification) {
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            self.scrollView.frame.size.height = self.view.frame.height
+        })
     }
     
     @objc func showKeyboard(_ notification: Notification) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,  UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -50,7 +51,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         //tap to hide keyboard
         //adding the gesture recognizer to the view to hide the keyboard if any place on the screen is tapped
-        let hideKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.hideKeyboard))
+        let hideKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.hideKeyboard(_:)))
         hideKeyboardTap.numberOfTapsRequired = 1
         self.view.isUserInteractionEnabled = true
         self.view.addGestureRecognizer(hideKeyboardTap)
@@ -63,6 +64,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         userImage.addGestureRecognizer(chooseAvatarTap)
         
         configureLayout()
+        getOldData()
         
         
     }
@@ -78,7 +80,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         //setup keyboard size
         keyboardSize = ((notification.userInfo?[UIKeyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue)!
         
-        //shrink of the EditViewController if the keyboard is shown
+        //shrink the EditViewController if the keyboard is shown
         UIView.animate(withDuration: 0.4, animations: { () -> Void in
             self.scrollView.contentSize.height = self.view.frame.size.height + self.keyboardSize.height / 2
         })
@@ -137,10 +139,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.dismiss(animated: true, completion: nil) //dismiss the EditProfileViewController
     }
     
-    //when save is pressed
-    @IBAction func saveButton_pressed(_ sender: UIBarButtonItem) {
-        
-    }
+   
     
     //MARK: - Picker View Methods
     
@@ -162,5 +161,120 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         genderTextField.text = genders[row]
         self.view.endEditing(true)
+    }
+    
+    //shows an alert with error and message that were passed
+    func showAlert(error: String, message: String) {
+        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertButton)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: - Show the user information before editing
+    
+    
+    func getOldData() {
+        
+        //place the avatar received in the editorVC image view
+        let avatarReceived = PFUser.current()?.object(forKey: "avatar") as! PFFile
+        avatarReceived.getDataInBackground { (data, error) -> Void in
+            self.userImage.image = UIImage(data: data!)
+        }
+        
+        //place the other fields received into the respective text fields
+        usernameTextField.text = PFUser.current()?.username
+        fullNameTextField.text = PFUser.current()?.object(forKey: "FullName") as? String
+        bioTextField.text = PFUser.current()?.object(forKey: "Bio") as? String
+        webTextField.text = PFUser.current()?.object(forKey: "website") as? String
+        
+        emailTextField.text = PFUser.current()?.email
+        phoneNumberTextField.text = PFUser.current()?.object(forKey: "PhoneNumber") as? String
+        genderTextField.text = PFUser.current()?.object(forKey: "Gender") as? String
+    }
+    
+    
+    //MARK: - Make sure email and website fields containt correct data
+    
+    func validateEmail(_ email : String) -> Bool {
+        //making sure that the email text field complies with the form user@email.domain
+        let regex = "[A-Z0-9a-z._%+-]{4}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2}" //{num} -> no less than. [] -> specifies allowed symbols
+        //checking if the email string is written according to regex rules
+        let range = email.range(of: regex, options: .regularExpression)
+        let result = range != nil ? true : false
+        
+        return result
+    }
+    
+    func validateWeb (_ web : String) -> Bool {
+        //making sure that the website textfield complies with the form www.website.domain
+        let regex = "www.+[A-Z0-9a-z._%+-]+.[A-Za-z]{2}"
+        let range = web.range(of: regex, options: .regularExpression)
+        let result = range != nil ? true : false
+        return result
+    }
+    
+    
+    //MARK: - Save the updated user data on the server
+    @IBAction func saveButton_pressed(_ sender: UIBarButtonItem) {
+        //check the results of email and website validation
+        
+        //if email is incorrect
+        if !validateEmail(emailTextField.text!) {
+            showAlert(error: "Incorrect email", message: "Please make sure the email is in the form of: user@email.com")
+            return
+        }
+        
+        //if website address is incorrect
+        if !validateWeb(webTextField.text!) {
+            showAlert(error: "Incorrect website address", message: "Please make sure the website is in the form of: www.website.com")
+            return
+        }
+        
+        //save filled in information
+        let userToUpdate = PFUser.current()!
+        userToUpdate.username = usernameTextField.text?.lowercased()
+        userToUpdate.email = emailTextField.text?.lowercased()
+        userToUpdate["FullName"] = fullNameTextField.text?.lowercased()
+        userToUpdate["website"] = webTextField.text?.lowercased()
+        userToUpdate["Bio"] = bioTextField.text
+        
+        
+        if phoneNumberTextField.text!.isEmpty {
+            userToUpdate["PhoneNumber"] = ""
+        } else {
+            userToUpdate["PhoneNumber"] = phoneNumberTextField.text
+        }
+        
+        if genderTextField.text!.isEmpty {
+            userToUpdate["Gender"] = ""
+        } else {
+            userToUpdate["Genger"] = genderTextField.text
+        }
+        
+        //compress the new avatar
+        let avatarCompressed = UIImageJPEGRepresentation(userImage.image!, 0.5)
+        let avatarToSend = PFFile(name: "userAvatar.jpg", data: avatarCompressed!)
+        userToUpdate["avatar"] = avatarToSend
+        
+        //send the updated information to the server
+        userToUpdate.saveInBackground (block: { (success, error) -> Void in
+            if success{
+                
+                //hide the keyboard
+                self.view.endEditing(true)
+                
+                //dismiss editViewController
+                self.dismiss(animated: true, completion: nil)
+                
+                // send notification to homeVC to be reloaded
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
+                
+            } else {
+                print(error!.localizedDescription)
+            }
+        })
+        
+        
     }
 }

@@ -31,16 +31,6 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureLayout()
-    }
-    
-    func configureLayout() {
-        
-        scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height
-        )
-        scrollView.contentSize.height = self.view.frame.height
-        scrollViewHeight = scrollView.frame.size.height
-        
         
         //calling these methods when the keyboard is shown/hidden
         NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.showKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -57,6 +47,16 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         addAvatar.numberOfTapsRequired = 1
         userAvatar.isUserInteractionEnabled = true
         userAvatar.addGestureRecognizer(addAvatar)
+        
+        configureLayout()
+    }
+    
+    func configureLayout() {
+        
+        scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height
+        )
+        scrollView.contentSize.height = self.view.frame.height
+        scrollViewHeight = scrollView.frame.size.height
         
         //Assigning constraints programmatically
         //these statements specify the elements' position in relation to screen borders, as well as to other elements
@@ -126,18 +126,14 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         
         //show an alert if some of required fields arent filled out
         if  (usernameTextfField.text!.isEmpty || passwordTextfField.text!.isEmpty || repeatPWTextfField.text!.isEmpty || userEmailTextField.text!.isEmpty || bioTextfField.text!.isEmpty || fullNameTextfField.text!.isEmpty) {
-            let alert = UIAlertController(title: "Error", message: "Please fill out all required text fields", preferredStyle: UIAlertControllerStyle.alert)
-            let alertButton = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(alertButton)
-            self.present(alert, animated: true, completion: nil)
+            showAlert(error: "Error", message: "Please fill out all required text fields")
+            return //exiting the function if a critical error is encountered
         }
         
         //show an alert if the two passwords dont match
         if passwordTextfField.text != repeatPWTextfField.text {
-            let alert = UIAlertController(title: "Passwords don't match", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            let alertButton = UIAlertAction(title: "Try again", style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(alertButton)
-            self.present(alert, animated: true, completion: nil)
+            showAlert(error: "Passwords don't match", message: "Please try again")
+            return  //exiting the function if a critical error is encountered
         }
         
         //MARK: - Recording the new user info on the server using Parse
@@ -190,14 +186,12 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         self.dismiss(animated: true, completion: nil) //returning back to the welcome screen if cancel is pressed
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //shows an alert with error and message that were passed
+    func showAlert(error: String, message: String) {
+        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertButton)
+        self.present(alert, animated: true, completion: nil)
     }
-    */
-
+    
 }

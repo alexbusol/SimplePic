@@ -44,14 +44,66 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         genderPicker.showsSelectionIndicator = true
         genderTextField.inputView = genderPicker
         
+        //monitor keyboard state (show/hide)
+        NotificationCenter.default.addObserver(self, selector: #selector(EditProfileViewController.showKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(EditProfileViewController.hideKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        //tap to hide keyboard
+        //adding the gesture recognizer to the view to hide the keyboard if any place on the screen is tapped
+        let hideKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.hideKeyboard))
+        hideKeyboardTap.numberOfTapsRequired = 1
+        self.view.isUserInteractionEnabled = true
+        self.view.addGestureRecognizer(hideKeyboardTap)
+        
+        //tap to choose image
+        //adding gesture recognizer to the image view to open image picker/camera if the image is tapped
+        let chooseAvatarTap = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.loadImage(_:)))
+        chooseAvatarTap.numberOfTapsRequired = 1
+        userImage.isUserInteractionEnabled = true
+        userImage.addGestureRecognizer(chooseAvatarTap)
+        
         configureLayout()
         
         
     }
     
+    //MARK: - Enabling ScrollView only if the keyboard is showing
     
+    //called when the keyboard needs to be hidden
+    @objc func hideKeyboard(_ notification: Notification) {
+        self.view.endEditing(true)
+    }
     
-    //setting layout constraints programatically
+    @objc func showKeyboard(_ notification: Notification) {
+        //setup keyboard size
+        keyboardSize = ((notification.userInfo?[UIKeyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue)!
+        
+        //shrink of the EditViewController if the keyboard is shown
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            self.scrollView.contentSize.height = self.view.frame.size.height + self.keyboardSize.height / 2
+        })
+    }
+    
+    //MARK: - Updating the avatar
+    //Opening the image picker if the user taps on the avatar.
+    @objc func loadImage(_ recognizer: UITapGestureRecognizer) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        //allows the user to select a new avatar from the library and edit it
+        //TO-DO: add an option to select from the camera
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    //place the new image into avatar image view
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        userImage.image = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //setting UI layout constraints programatically
     func configureLayout() {
         //getting the width and height of the current screen
         let width = self.view.frame.size.width

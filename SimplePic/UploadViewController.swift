@@ -14,6 +14,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var userPicture: UIImageView!
     @IBOutlet weak var titleTextView: UITextView!
     @IBOutlet weak var publishButton: UIButton!
+    @IBOutlet weak var removeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,15 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         //finishes creating a post
         publishButton.isEnabled = false
         publishButton.backgroundColor = .lightGray
+        
+        
+        //hide the remove button if there's no image uploaded
+        removeButton.isHidden = true
+        
+        //set a default image if no post image is uploaded
+        //can change to something better later
+        //now just a placeholder image
+        userPicture.image = UIImage(named: "postbg.jpg")
         
         //hiding the keyboard if the screen is tapped
         let screenTapped = UITapGestureRecognizer(target: self, action: #selector(UploadViewController.hideKeyboardTap))
@@ -61,6 +71,8 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         publishButton.isEnabled = true
         publishButton.backgroundColor = .blue
         
+        //show the remove button now that the picture is uploaded
+        removeButton.isHidden = false
         //allow the user to zoom the image by tapping on the image view in the UploadVC after uploading the image
         //if the image is tapped again, the frame size returns to normal
         let zoomImage = UITapGestureRecognizer(target: self,  action: #selector(UploadViewController.zoomImage))
@@ -89,6 +101,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                 self.view.backgroundColor = .black
                 self.titleTextView.alpha = 0
                 self.publishButton.alpha = 0
+                self.removeButton.alpha = 0
             })
             
         //return the image size to normal
@@ -100,6 +113,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                 self.view.backgroundColor = .white
                 self.titleTextView.alpha = 1
                 self.publishButton.alpha = 1
+                self.removeButton.alpha = 1
             })
         }
     }
@@ -113,6 +127,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         userPicture.frame = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.size.height + 35, width: width / 4.5, height: width / 4.5)
         titleTextView.frame = CGRect(x: userPicture.frame.size.width + 25, y: userPicture.frame.origin.y, width: width / 1.488, height: userPicture.frame.size.height)
         publishButton.frame = CGRect(x: 0, y: self.tabBarController!.tabBar.frame.origin.y - width / 8, width: width, height: width / 8)
+        removeButton.frame = CGRect(x: userPicture.frame.origin.x, y: userPicture.frame.origin.y + userPicture.frame.size.height, width: userPicture.frame.size.width, height: 20)
 
     }
 
@@ -160,4 +175,12 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
             }
         })
     }
+    
+    //allowing the user to remove the image from the post image view and choose another
+    @IBAction func removeButton_pressed(_ sender: UIButton) {
+        //remove the uploaded post image
+        //calling view did load here resets the UploadViewController to its default view
+        viewDidLoad()
+    }
+    
 }

@@ -755,7 +755,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="postbg" id="HdL-tz-gbt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="postbg" id="HdL-tz-gbt">
                                 <rect key="frame" x="15" y="79" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -778,12 +778,21 @@
                                     <action selector="publishButton_pressed:" destination="M0T-xw-tgo" eventType="touchUpInside" id="B9T-f1-lMh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="czq-cx-Sm7">
+                                <rect key="frame" x="15" y="148" width="70" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Remove"/>
+                                <connections>
+                                    <action selector="removeButton_pressed:" destination="M0T-xw-tgo" eventType="touchUpInside" id="9cX-jS-C9g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <navigationItem key="navigationItem" id="XTq-f5-TXI"/>
                     <connections>
                         <outlet property="publishButton" destination="4za-8g-5wA" id="6rx-Ra-zDg"/>
+                        <outlet property="removeButton" destination="czq-cx-Sm7" id="1bw-QC-0kw"/>
                         <outlet property="titleTextView" destination="h38-pd-3cQ" id="uJR-3G-rLW"/>
                         <outlet property="userPicture" destination="HdL-tz-gbt" id="mhE-kF-Yef"/>
                     </connections>

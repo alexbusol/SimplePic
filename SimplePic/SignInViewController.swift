@@ -59,6 +59,10 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureLayout()
+    }
+    
+    func configureLayout() {
         
         //Assigning constraints programmatically
         welcomeLabel.frame = CGRect(x: 10, y: 80, width: self.view.frame.size.width - 20, height: 111)
@@ -72,7 +76,7 @@ class SignInViewController: UIViewController {
         signUpButton.frame = CGRect(x: self.view.frame.size.width - self.view.frame.size.width / 4 - 20, y: signInButton.frame.origin.y, width: self.view.frame.size.width / 4, height: 30)
         signUpButton.layer.cornerRadius = signUpButton.frame.size.width / 20
         
-
+        
         let background = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
         background.image = UIImage(named: "bg.jpg")
         background.layer.zPosition = -1

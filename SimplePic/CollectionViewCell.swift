@@ -14,7 +14,11 @@ class CollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //setting layout constraints programatically
+        configureLayout()
+    }
+    
+    //setting layout constraints programatically
+    func configureLayout() {
         let width = UIScreen.main.bounds.width //find the width of the current screen
         imageInCell.frame = CGRect(x: 0, y: 0, width: width / 3, height: width / 3)
     }

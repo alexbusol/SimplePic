@@ -18,10 +18,14 @@ class FollowerCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureLayout()
+    }
+    
+    //Assigning layout constraints programatically
+    
+    func configureLayout() {
         
-        //Assigning layout constraints programatically
         let width = UIScreen.main.bounds.width //getting the width of the current display
-        
         userImage.frame = CGRect(x: 10, y: 10, width: width / 5.3, height: width / 5.3)
         username.frame = CGRect(x: userImage.frame.size.width + 20, y: 28, width: width / 3.2, height: 30)
         followButton.frame = CGRect(x: width - width / 3.5 - 10, y: 30, width: width / 3.5, height: 30)
@@ -29,9 +33,7 @@ class FollowerCell: UITableViewCell {
         
         userImage.layer.cornerRadius = userImage.frame.size.width / 2
         userImage.clipsToBounds = true
-        
     }
-    
     
     @IBAction func followButton_Pressed(_ sender: UIButton) {
         

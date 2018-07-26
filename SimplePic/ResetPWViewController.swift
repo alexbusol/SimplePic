@@ -17,7 +17,11 @@ class ResetPWViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //assigning constraints programmatically
+        configureLayout()
+    }
+    
+    //assigning constraints programmatically
+    func configureLayout() {
         emailTextField.frame = CGRect(x: 10, y: 120, width: self.view.frame.size.width - 20, height: 30)
         
         resetButton.frame = CGRect(x: 20, y: emailTextField.frame.origin.y + 50, width: self.view.frame.size.width / 4, height: 30)
@@ -25,7 +29,6 @@ class ResetPWViewController: UIViewController {
         
         cancelButton.frame = CGRect(x: self.view.frame.size.width - self.view.frame.size.width / 4 - 20, y: resetButton.frame.origin.y, width: self.view.frame.size.width / 4, height: 30)
         cancelButton.layer.cornerRadius = cancelButton.frame.size.width / 20
-       
     }
 
     @IBAction func resetPressed(_ sender: UIButton) {

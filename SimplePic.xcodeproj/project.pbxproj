@@ -23,6 +23,7 @@
 		E62345F421061EE2009B3D80 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F321061EE2009B3D80 /* SystemConfiguration.framework */; };
 		E62345F721061FD1009B3D80 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F521061FD0009B3D80 /* Bolts.framework */; };
 		E62345F821061FD1009B3D80 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F621061FD1009B3D80 /* Parse.framework */; };
+		E66C12132109C95C000CE45E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66C12122109C95C000CE45E /* EditProfileViewController.swift */; };
 		E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D20732108A105000DF34A /* FollowersViewController.swift */; };
 		E67D20762108A136000DF34A /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D20752108A136000DF34A /* FollowerCell.swift */; };
 		E67D20782108D033000DF34A /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D20772108D033000DF34A /* GuestViewController.swift */; };
@@ -53,6 +54,7 @@
 		E62345F321061EE2009B3D80 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E62345F521061FD0009B3D80 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		E62345F621061FD1009B3D80 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		E66C12122109C95C000CE45E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		E67D20732108A105000DF34A /* FollowersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
 		E67D20752108A136000DF34A /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		E67D20772108D033000DF34A /* GuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				E67D20732108A105000DF34A /* FollowersViewController.swift */,
 				E67D20752108A136000DF34A /* FollowerCell.swift */,
 				E67D20772108D033000DF34A /* GuestViewController.swift */,
+				E66C12122109C95C000CE45E /* EditProfileViewController.swift */,
 			);
 			path = SimplePic;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E66C12132109C95C000CE45E /* EditProfileViewController.swift in Sources */,
 				E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */,
 				E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */,
 				E67D20762108A136000DF34A /* FollowerCell.swift in Sources */,

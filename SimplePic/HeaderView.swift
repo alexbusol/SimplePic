@@ -72,8 +72,12 @@ class HeaderView: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureLayout()
+    }
+    
+    //Assigning layout constraints programatically
+    func configureLayout() {
         
-        //Assigning layout constraints programatically
         
         let width = UIScreen.main.bounds.width //find the width of the current screen
         
@@ -93,7 +97,6 @@ class HeaderView: UICollectionReusableView {
         fullNameLabel.frame = CGRect(x: userImage.frame.origin.x, y: userImage.frame.origin.y + userImage.frame.size.height, width: width - 30, height: 30)
         websiteTextField.frame = CGRect(x: userImage.frame.origin.x - 5, y: fullNameLabel.frame.origin.y + 22, width: width - 30, height: 30)
         bioLabel.frame = CGRect(x: userImage.frame.origin.x, y: websiteTextField.frame.origin.y + 30, width: width - 30, height: 30)
-        
     }
     
 }

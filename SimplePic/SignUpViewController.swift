@@ -31,6 +31,10 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureLayout()
+    }
+    
+    func configureLayout() {
         
         scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height
         )
@@ -53,7 +57,7 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         addAvatar.numberOfTapsRequired = 1
         userAvatar.isUserInteractionEnabled = true
         userAvatar.addGestureRecognizer(addAvatar)
-
+        
         //Assigning constraints programmatically
         //these statements specify the elements' position in relation to screen borders, as well as to other elements
         userAvatar.frame = CGRect(x: self.view.frame.size.width / 2 - 40, y: 40, width: 80, height: 80)
@@ -70,8 +74,6 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         
         cancelButton.frame = CGRect(x: self.view.frame.size.width - self.view.frame.size.width / 4 - 20, y: signUpButton.frame.origin.y, width: self.view.frame.size.width / 4, height: 30)
         cancelButton.layer.cornerRadius = cancelButton.frame.size.width / 20
-        
-        
     }
     
     //MARK: - Handiling the keyboard

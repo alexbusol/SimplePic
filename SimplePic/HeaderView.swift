@@ -39,7 +39,7 @@ class HeaderView: UICollectionReusableView {
                     self.profileActionButton.setTitle("Following", for: UIControlState())
                     self.profileActionButton.backgroundColor = .blue
                 } else {
-                    print("There was an error following the user \(error?.localizedDescription)")
+                    print("There was an error when trying to follow the user \(error?.localizedDescription)")
                 }
             })
         } else { //if following -> unfollow routine
@@ -64,6 +64,7 @@ class HeaderView: UICollectionReusableView {
                     
                 } else {
                     print("Unable to unfollow \(error?.localizedDescription)")
+                    
                 }
             })
             
@@ -98,5 +99,7 @@ class HeaderView: UICollectionReusableView {
         websiteTextField.frame = CGRect(x: userImage.frame.origin.x - 5, y: fullNameLabel.frame.origin.y + 22, width: width - 30, height: 30)
         bioLabel.frame = CGRect(x: userImage.frame.origin.x, y: websiteTextField.frame.origin.y + 30, width: width - 30, height: 30)
     }
+    
+    
     
 }

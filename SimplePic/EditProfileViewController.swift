@@ -216,6 +216,12 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     func validateWeb (_ web : String) -> Bool {
         //making sure that the website textfield complies with the form www.website.domain
+        
+        //it's okay to have an empty website address
+        if webTextField.text == "" {
+            return true
+        }
+        
         let regex = "www.+[A-Z0-9a-z._%+-]+.[A-Za-z]{2}"
         let range = web.range(of: regex, options: .regularExpression)
         let result = range != nil ? true : false
@@ -276,7 +282,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 self.dismiss(animated: true, completion: nil)
                 
                 //send notification to homeVC to be reloaded
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
+                //not used right now. done in ViewWillAppear() instead because it accomplishes more tasks at once
+                //can add a catching "reload" function to receive the notification below
+                //that's a different way of implementing reload functionality
+                //NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
                 
             } else {
                 print(error!.localizedDescription)

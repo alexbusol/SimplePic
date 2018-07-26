@@ -39,27 +39,27 @@ class ResetPWViewController: UIViewController {
             PFUser.requestPasswordResetForEmail(inBackground: emailText) { (success, error) -> Void in
                 if success {
                     //tell the user to check the email to complete the reset
-                    let alert = UIAlertController(title: "Confirm reset", message: "An email with a link has been sent to \(emailText). Click on the link to complete the password reset", preferredStyle: UIAlertControllerStyle.alert)
-         
-                    let alertButton = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (UIAlertAction) -> Void in
-                        self.dismiss(animated: true, completion: nil)
-                    })
-                    alert.addAction(alertButton)
-                    self.present(alert, animated: true, completion: nil)
+                    self.showAlert(error: "Confirm reset", message: "An email with a link has been sent to \(emailText). Click on the link to complete the password reset")
                 } else {
-                    print(error!.localizedDescription)
+                    self.showAlert(error: "Password reset failed", message: error!.localizedDescription)
                 }
             }
         } else {
             //email text field is empty
-            let alert = UIAlertController(title: "Email is empty", message: "Please enter your email to reset the password", preferredStyle: .alert)
-            let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alert.addAction(alertButton)
-            self.present(alert, animated: true, completion: nil)
+            showAlert(error: "Email is empty", message: "Please enter your email to reset the password")
         }
     }
     @IBAction func cancelPressed(_ sender: UIButton) {
         self.view.endEditing(true) 
         self.dismiss(animated: true, completion: nil)
     }
+    
+    //shows an alert with error and message that were passed
+    func showAlert(error: String, message: String) {
+        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertButton)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }

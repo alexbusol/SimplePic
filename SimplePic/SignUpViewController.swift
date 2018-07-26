@@ -117,11 +117,51 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+    //MARK: - Make sure email and website fields containt correct data
+    
+    func validateEmail(_ email : String) -> Bool {
+        //making sure that the email text field complies with the form user@email.domain
+        let regex = "[A-Z0-9a-z._%+-]{4}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2}" //{num} -> no less than. [] -> specifies allowed symbols
+        //checking if the email string is written according to regex rules
+        let range = email.range(of: regex, options: .regularExpression)
+        let result = range != nil ? true : false
+        
+        return result
+    }
+    
+    func validateWeb (_ web : String) -> Bool {
+        //making sure that the website textfield complies with the form www.website.domain
+        
+        //it's okay to have an empty website address
+        if websiteTextfField.text == "" {
+            return true
+        }
+        
+        let regex = "www.+[A-Z0-9a-z._%+-]+.[A-Za-z]{2}"
+        let range = web.range(of: regex, options: .regularExpression)
+        let result = range != nil ? true : false
+        return result
+    }
+    
     //MARK: - Button handlers
+    
     @IBAction func signUpClicked(_ sender: UIButton) {
         print("Sign up pressed")
         //dismiss keyboard when sign up is pressed
         self.view.endEditing(true)
+        
+        //if email is incorrect
+        if !validateEmail(userEmailTextField.text!) {
+            showAlert(error: "Incorrect email", message: "Please make sure the email is in the form of: user@email.com")
+            return
+        }
+        
+        //if website address is incorrect
+        if !validateWeb(websiteTextfField.text!) {
+            showAlert(error: "Incorrect website address", message: "Please make sure the website is in the form of: www.website.com")
+            return
+        }
         
         
         //show an alert if some of required fields arent filled out
@@ -171,10 +211,7 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
                 
             } else {
                 //tell the user that registration failed
-                let alert = UIAlertController(title: "Registration Failed", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                let alertButton = UIAlertAction(title: "Try again", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(alertButton)
-                self.present(alert, animated: true, completion: nil)
+                self.showAlert(error: "Registration Failed", message: error!.localizedDescription)
             }
         }
         

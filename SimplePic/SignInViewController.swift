@@ -27,10 +27,7 @@ class SignInViewController: UIViewController {
         
         //show an alert if the login fields are empty
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            let alert = UIAlertController(title: "Login Error", message: "Login or password fields are empty", preferredStyle: .alert)
-            let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alert.addAction(alertButton)
-            self.present(alert, animated: true, completion: nil)
+            showAlert(error: "Login Error", message: "Login or password fields are empty")
         }
         
         //MARK: - Login using Parse. We pass in the username and password textfields' contents.
@@ -47,12 +44,8 @@ class SignInViewController: UIViewController {
                 appDelegate.login()
                 
             } else {
-                
-                //Login unsuccessful. Show an alert
-                let alert = UIAlertController(title: "Login Error", message: error!.localizedDescription, preferredStyle: .alert)
-                let alertButton = UIAlertAction(title: "Try again", style: .cancel, handler: nil)
-                alert.addAction(alertButton)
-                self.present(alert, animated: true, completion: nil)
+                print("login error")
+                self.showAlert(error: "Login Error", message: "Unable to login. Please verify your username and password and try again.")
             }
         }
     }
@@ -81,6 +74,14 @@ class SignInViewController: UIViewController {
         background.image = UIImage(named: "bg.jpg")
         background.layer.zPosition = -1
         self.view.addSubview(background)
+    }
+    
+    //shows an alert with error and message that were passed
+    func showAlert(error: String, message: String) {
+        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertButton)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }

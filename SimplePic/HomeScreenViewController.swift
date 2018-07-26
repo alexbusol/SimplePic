@@ -41,6 +41,12 @@ class HomeScreenViewController: UICollectionViewController {
         
     }
     
+    
+    //MARK: - Making sure that all the date is up-to-date every time the user sees HomeViewController
+    override func  viewWillAppear(_ animated: Bool) {
+        self.collectionView?.reloadData()
+    }
+    
     @objc func refresh() {
         loadPosts()
         

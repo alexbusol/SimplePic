@@ -275,7 +275,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 //dismiss editViewController
                 self.dismiss(animated: true, completion: nil)
                 
-                // send notification to homeVC to be reloaded
+                //send notification to homeVC to be reloaded
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
                 
             } else {

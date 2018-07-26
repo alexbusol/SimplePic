@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Parse
 
 class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var userPicture: UIImageView!
     @IBOutlet weak var titleTextView: UITextView!
     @IBOutlet weak var publishButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +35,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         userPicture.addGestureRecognizer(pictureTapped)
         configureLayout()
     }
+    
     
     //dismisses the keyboard when the screen is tapped
     @objc func hideKeyboardTap() {
@@ -70,10 +73,10 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     @objc func zoomImage() {
         
         //the app change the picture frame sizes depending on if it's zoomed/unzoomed
-        let zoomedImageSize = CGRect(x: 0, y: self.view.center.y - self.view.center.x - self.tabBarController!.tabBar.frame.size.height * 1.5, width: self.view.frame.size.width, height: self.view.frame.size.width)
+        let zoomedImageSize = CGRect(x: 0, y: self.view.center.y - self.view.center.x, width: self.view.frame.size.width, height: self.view.frame.size.width)
         
         // frame of unzoomed (small) image
-        let unzoomedImageSize = CGRect(x: 15, y: 15, width: self.view.frame.size.width / 4.5, height: self.view.frame.size.width / 4.5)
+        let unzoomedImageSize = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.size.height + 35, width: self.view.frame.size.width / 4.5, height: self.view.frame.size.width / 4.5)
         
         if userPicture.frame == unzoomedImageSize {
             //increase the size of the picture with animation
@@ -107,10 +110,54 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height
         
-        userPicture.frame = CGRect(x: 15, y: 15, width: width / 4.5, height: width / 4.5)
+        userPicture.frame = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.size.height + 35, width: width / 4.5, height: width / 4.5)
         titleTextView.frame = CGRect(x: userPicture.frame.size.width + 25, y: userPicture.frame.origin.y, width: width / 1.488, height: userPicture.frame.size.height)
-        publishButton.frame = CGRect(x: 0, y: height / 1.09, width: width, height: width / 8)
+        publishButton.frame = CGRect(x: 0, y: self.tabBarController!.tabBar.frame.origin.y - width / 8, width: width, height: width / 8)
 
     }
 
+    @IBAction func publishButton_pressed(_ sender: UIButton) {
+        //dismiss the keyboard
+        self.view.endEditing(true)
+        
+        //prepare the the post for sending to the database
+        //filling the columns of the POSTS class in the database
+        let object = PFObject(className: "posts")
+        object["username"] = PFUser.current()!.username
+        object["avatar"] = PFUser.current()!.value(forKey: "avatar") as! PFFile
+        
+        let uuid = UUID().uuidString
+        object["uuid"] = "\(PFUser.current()!.username!) \(uuid)"
+        
+        //adding some text under the image if the user has entered any
+        //title column in the POSTS class of the database holds the text that user adds under the posted image
+        if titleTextView.text.isEmpty {
+            object["title"] = ""
+        } else {
+            //removing any extra whitespace
+            object["title"] = titleTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        }
+        
+        //send the user picked image to the server with compressiong
+        let imageToPost = UIImageJPEGRepresentation(userPicture.image!, 0.5)
+        let imageFile = PFFile(name: "post.jpg", data: imageToPost!)
+        object["pic"] = imageFile
+        
+        
+        //save the new post on the server in the POSTS class
+        object.saveInBackground (block: { (success, error) -> Void in
+            if error == nil {
+                
+                //send notification to be received in HomeScreenViewController
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "uploadedPost"), object: nil)
+                
+                //switch to the tab bar option 0 (home screen view controller)
+                self.tabBarController!.selectedIndex = 0
+                
+                //reset UploadViewController to its default state
+                self.viewDidLoad()
+                self.titleTextView.text = ""
+            }
+        })
+    }
 }

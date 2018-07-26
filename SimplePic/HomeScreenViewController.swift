@@ -36,6 +36,9 @@ class HomeScreenViewController: UICollectionViewController {
         toRefresh.addTarget(self, action: #selector(HomeScreenViewController.refresh), for: UIControlEvents.valueChanged)
         collectionView?.addSubview(toRefresh)
     
+        //receiving notification from UploadViewController
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeScreenViewController.uploadedPost), name: NSNotification.Name(rawValue: "uploadedPost"), object: nil)
+        
         //load the posts when open the homescreen
         loadPosts()
         
@@ -51,6 +54,11 @@ class HomeScreenViewController: UICollectionViewController {
         loadPosts()
         
         toRefresh.endRefreshing() //stops refreshing animation when the new data was received
+    }
+    
+    //refreshing the user posts after a new one has been added
+    @objc func uploadedPost() {
+        loadPosts()
     }
 
     //MARK: - Load the most up-to-date posts for the user profile

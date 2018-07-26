@@ -190,4 +190,9 @@ class FollowersViewController: UITableViewController {
             self.navigationController?.pushViewController(guestVC, animated: true)
         }
     }
+    
+    //changing the height of a follower cell
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.view.frame.size.width / 4
+    }
 }

@@ -268,6 +268,12 @@ class GuestViewController: UICollectionViewController {
         self.navigationController?.pushViewController(followingVC, animated: true)
     }
     
+    //determining the size of a cell. making sure that we can fit 3 cells on every screen.
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        let size = CGSize(width: self.view.frame.size.width / 3, height: self.view.frame.size.width / 3)
+        return size
+    }
+    
 
     
 }

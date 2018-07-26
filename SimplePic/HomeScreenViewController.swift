@@ -67,6 +67,7 @@ class HomeScreenViewController: UICollectionViewController {
         // request infomration from server
         let postsQuery = PFQuery(className: "posts")
         postsQuery.whereKey("username", equalTo: PFUser.current()!.username!) //making sure to get the information for the currently logged-in user
+        postsQuery.addDescendingOrder("createdAt") //sorting the posts by the date added in descending order
         postsQuery.limit = pageSize //showing the most recent 12 posts
         
         //method to find and retrieve objects from the database

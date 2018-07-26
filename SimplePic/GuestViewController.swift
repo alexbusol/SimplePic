@@ -78,6 +78,7 @@ class GuestViewController: UICollectionViewController {
         // request infomration from server
         let postsQuery = PFQuery(className: "posts")
         postsQuery.whereKey("username", equalTo: guestUsername.last!) //making sure to get the information for the currently latest visited user
+        postsQuery.addDescendingOrder("createdAt") //sorting the posts by the date added in descending order
         postsQuery.limit = pageSize //showing the most recent 12 posts
         
         //method to find and retrieve objects from the database

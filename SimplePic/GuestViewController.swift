@@ -104,6 +104,55 @@ class GuestViewController: UICollectionViewController {
         })
         
     }
+    
+    
+    //check whether the user scrolled to the bottom of the page
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= scrollView.contentSize.height - self.view.frame.size.height {
+            //if the user reached the bottom and there are more posts that are not shown, load the next 12 posts
+            loadAdditionalPosts()
+            
+        }
+    }
+    
+    //loading more posts if necessary.
+    //TODO: - unite load additional posts and load posts
+    func loadAdditionalPosts() {
+        
+        //check if there are more posts that arent in the view yet
+        if pageSize <= pictureArray.count {
+            
+            //double the page size
+            pageSize = pageSize + 12
+            
+            // load more posts
+            let postsQuery = PFQuery(className: "posts")
+            postsQuery.whereKey("username", equalTo: guestUsername.last!)
+            postsQuery.addDescendingOrder("createdAt") //sorting the posts by the date added in descending order
+            postsQuery.limit = pageSize //limit the query to loading only the size of page number of items
+            postsQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                if error == nil {
+                    
+                    //clean up the previous posts shown
+                    self.uuidArray.removeAll(keepingCapacity: false)
+                    self.pictureArray.removeAll(keepingCapacity: false)
+                    
+                    //
+                    for object in objects! {
+                        self.uuidArray.append(object.value(forKey: "uuid") as! String)
+                        self.pictureArray.append(object.value(forKey: "pic") as! PFFile)
+                    }
+                    //refresh the collection view data
+                    self.collectionView?.reloadData()
+                    
+                } else {
+                    print(error?.localizedDescription ?? String())
+                }
+            })
+            
+        }
+    }
+    
 
     //determines how many cells are going to be shown.
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

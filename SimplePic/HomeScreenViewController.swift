@@ -324,4 +324,17 @@ class HomeScreenViewController: UICollectionViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    //MARK: - Open to a certain post
+    //this method gets called when a user selects an image from the collection view in Home/Guest Views
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //pass the UUID of the post that the user selected to the PostViewController
+        postToLoadUUID.append(uuidArray[indexPath.row])
+        
+        //navigate to the PostViewController
+        let postToOpen = self.storyboard?.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+        self.navigationController?.pushViewController(postToOpen, animated: true)
+        
+        
+    }
+    
 }

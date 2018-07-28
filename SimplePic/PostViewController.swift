@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-var postUUID = [String]() //holds unique identifiers of posts
+var postToLoadUUID = [String]() //holds unique identifiers of posts received after user clicks on a post in Home/Guest view
 
 class PostViewController: UITableViewController {
     
@@ -37,12 +37,12 @@ class PostViewController: UITableViewController {
         
         //need to make the PostCell height dynamic depending on the amount
         //of text in the post description
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 500
+//        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 500
         
         //find the post the user clicked on
         let postQuery = PFQuery(className: "posts")
-        postQuery.whereKey("uuid", equalTo: postUUID.last!)
+        postQuery.whereKey("uuid", equalTo: postToLoadUUID.last!)
         postQuery.findObjectsInBackground { (objects, error) in
             if error == nil {
                 
@@ -64,6 +64,8 @@ class PostViewController: UITableViewController {
                     self.descriptionArray.append(object.value(forKey: "title") as! String)
              
                 }
+                
+                self.tableView.reloadData()
             }
         }
         
@@ -76,6 +78,7 @@ class PostViewController: UITableViewController {
         postCell.usernameButton.setTitle(userNameArray[indexPath.row], for: .normal) //changing the title of the username button to the post creator's username
         postCell.uuidLabel.text = uuidArray[indexPath.row]
         postCell.descriptionLabel.text = descriptionArray[indexPath.row]
+        postCell.descriptionLabel.sizeToFit()
         userAvatarArray[indexPath.row].getDataInBackground { (data, error) in
             if error == nil {
                 postCell.userAvatar.image = UIImage(data: data!)
@@ -131,13 +134,13 @@ class PostViewController: UITableViewController {
         self.navigationController?.popViewController(animated: true)
         
         //remove the post uuid from the visited array
-        if !postUUID.isEmpty {
-            postUUID.removeLast()
+        if !postToLoadUUID.isEmpty {
+            postToLoadUUID.removeLast()
         }
     }
 
     //number of cells
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //return 1 cell because only 1 picture will be shown
+        return userNameArray.count
     }
 }

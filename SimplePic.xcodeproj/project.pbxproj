@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E61835DE210C74460025C190 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61835DD210C74460025C190 /* PostViewController.swift */; };
+		E61835E0210C74580025C190 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61835DF210C74580025C190 /* PostCell.swift */; };
 		E62345CF21061DEB009B3D80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62345CE21061DEB009B3D80 /* AppDelegate.swift */; };
 		E62345D421061DEB009B3D80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E62345D221061DEB009B3D80 /* Main.storyboard */; };
 		E62345D621061DEC009B3D80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E62345D521061DEC009B3D80 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E61835DD210C74460025C190 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		E61835DF210C74580025C190 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E62345CB21061DEB009B3D80 /* SimplePic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E62345CE21061DEB009B3D80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E62345D321061DEB009B3D80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				E67D20772108D033000DF34A /* GuestViewController.swift */,
 				E66C12122109C95C000CE45E /* EditProfileViewController.swift */,
 				E66C1214210A274B000CE45E /* UploadViewController.swift */,
+				E61835DD210C74460025C190 /* PostViewController.swift */,
+				E61835DF210C74580025C190 /* PostCell.swift */,
 			);
 			path = SimplePic;
 			sourceTree = "<group>";
@@ -224,9 +230,11 @@
 				E66C12132109C95C000CE45E /* EditProfileViewController.swift in Sources */,
 				E66C1215210A274B000CE45E /* UploadViewController.swift in Sources */,
 				E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */,
+				E61835DE210C74460025C190 /* PostViewController.swift in Sources */,
 				E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */,
 				E67D20762108A136000DF34A /* FollowerCell.swift in Sources */,
 				E62345CF21061DEB009B3D80 /* AppDelegate.swift in Sources */,
+				E61835E0210C74580025C190 /* PostCell.swift in Sources */,
 				E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */,
 				E67D20782108D033000DF34A /* GuestViewController.swift in Sources */,
 				E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */,

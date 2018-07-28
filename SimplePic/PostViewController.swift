@@ -27,11 +27,11 @@ class PostViewController: UITableViewController {
         self.navigationItem.title = "test" //change later
         self.navigationItem.hidesBackButton = true
         //creating a button that lets the user to go back to a previous screen
-        let backButton = UIBarButtonItem(title: "back", style: .plain, target: self, action: "back")
+        let backButton = UIBarButtonItem(image: UIImage(named: "back.png"), style: .plain, target: self, action: #selector(PostViewController.goBack(_:)))
         self.navigationItem.leftBarButtonItem = backButton
         
         //implementing a swipe right gesture to go back
-        let backSwipe = UISwipeGestureRecognizer(target: self, action: "back")
+        let backSwipe = UISwipeGestureRecognizer(target: self, action: #selector(PostViewController.goBack(_:)))
         backSwipe.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(backSwipe)
         
@@ -124,6 +124,16 @@ class PostViewController: UITableViewController {
         
         return postCell
         
+    }
+    
+    @objc func goBack(_ sender: UIBarButtonItem) {
+        //return to the previous viewController
+        self.navigationController?.popViewController(animated: true)
+        
+        //remove the post uuid from the visited array
+        if !postUUID.isEmpty {
+            postUUID.removeLast()
+        }
     }
 
     //number of cells

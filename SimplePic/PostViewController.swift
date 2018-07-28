@@ -105,23 +105,23 @@ class PostViewController: UITableViewController {
         }
         //if the time difference is less than 1 minute
         if timeDifference.second! > 0 && timeDifference.minute! == 0 {
-            postCell.postDateLabel.text = "\(String(describing: timeDifference.second))s." //display the difference in seconds
+            postCell.postDateLabel.text = "\(String(describing: timeDifference.second!))s ago" //display the difference in seconds
         }
         //if the time difference is less than 1 hour
         if timeDifference.minute! > 0 && timeDifference.hour! == 0 {
-            postCell.postDateLabel.text = "\(String(describing: timeDifference.minute))m." //display the difference in minutes
+            postCell.postDateLabel.text = "\(String(describing: timeDifference.minute!))m ago" //display the difference in minutes
         }
         //if the time difference is less than 1 day
         if timeDifference.hour! > 0 && timeDifference.day! == 0 {
-            postCell.postDateLabel.text = "\(String(describing: timeDifference.hour))h." //display the difference in hours
+            postCell.postDateLabel.text = "\(String(describing: timeDifference.hour!))h ago" //display the difference in hours
         }
         //if the time difference is less than 1 week
         if timeDifference.day! > 0 && timeDifference.weekOfMonth! == 0 {
-            postCell.postDateLabel.text = "\(String(describing: timeDifference.day))d." //display the difference in days
+            postCell.postDateLabel.text = "\(String(describing: timeDifference.day!))d ago" //display the difference in days
         }
         //if the time difference is more than 1 week
         if timeDifference.weekOfMonth! > 0 {
-            postCell.postDateLabel.text = "\(String(describing: timeDifference.weekOfMonth))w." //display the difference in weeks
+            postCell.postDateLabel.text = "\(String(describing: timeDifference.weekOfMonth!))w ago" //display the difference in weeks
         }
         
         

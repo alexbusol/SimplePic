@@ -20,6 +20,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var likeNumLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var uuidLabel: UILabel!
     
     
     

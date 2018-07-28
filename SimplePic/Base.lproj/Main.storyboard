@@ -685,6 +685,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="499.66666666666669"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="UUID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rkU-al-bad">
+                                            <rect key="frame" x="186" y="201" width="41" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="postbg" id="YWg-SB-XBg">
                                             <rect key="frame" x="32" y="36" width="350" height="350"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -747,6 +754,7 @@
                                     <outlet property="postImage" destination="YWg-SB-XBg" id="E5X-6P-fMk"/>
                                     <outlet property="userAvatar" destination="Dz0-Ca-2PF" id="W6n-fX-FD7"/>
                                     <outlet property="usernameButton" destination="f9f-St-bgq" id="r3D-jA-NRU"/>
+                                    <outlet property="uuidLabel" destination="rkU-al-bad" id="mI0-EM-NxM"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

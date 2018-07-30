@@ -154,8 +154,31 @@ class PostViewController: UITableViewController {
             postCell.likeNumLabel.text = "\(count)"
         }
         
+        //assign an index to the username button
+        postCell.usernameButton.layer.setValue(indexPath, forKey: "index")
+        
         return postCell
     }
+    
+    //reacting to pressing on the username
+    @IBAction func username_pressed(_ sender: UIButton) {
+        
+        //get the index of the current username in the cell
+        let i = sender.layer.value(forKey: "index") as! IndexPath
+        
+        let cell = tableView.cellForRow(at: i) as! PostCell
+        
+        //send the user to either home or guest view, depending on the post author
+        if cell.usernameButton.titleLabel?.text == PFUser.current()?.username {
+            let goHome = self.storyboard?.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+            self.navigationController?.pushViewController(goHome, animated: true)
+        } else {
+            guestUsername.append(cell.usernameButton.titleLabel!.text!)
+            let goGuest = self.storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
+            self.navigationController?.pushViewController(goGuest, animated: true)
+        }
+    }
+    
     
     @objc func goBack(_ sender: UIBarButtonItem) {
         //return to the previous viewController

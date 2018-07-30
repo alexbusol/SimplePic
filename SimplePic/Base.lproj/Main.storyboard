@@ -705,6 +705,9 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <state key="normal" title="username"/>
+                                            <connections>
+                                                <action selector="username_pressed:" destination="adW-Ah-Xvd" eventType="touchUpInside" id="gg2-7p-pop"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PostDate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Lk-4R-MNj">
                                             <rect key="frame" x="311" y="6" width="89" height="21"/>

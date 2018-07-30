@@ -124,10 +124,11 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height
         
-        userPicture.frame = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.size.height + 35, width: width / 4.5, height: width / 4.5)
+        userPicture.frame = CGRect(x: 15, y: 15, width: width / 4.5, height: width / 4.5)
         titleTextView.frame = CGRect(x: userPicture.frame.size.width + 25, y: userPicture.frame.origin.y, width: width / 1.488, height: userPicture.frame.size.height)
-        publishButton.frame = CGRect(x: 0, y: self.tabBarController!.tabBar.frame.origin.y - width / 8, width: width, height: width / 8)
+        publishButton.frame = CGRect(x: 0, y: height / 1.29, width: width, height: width / 8)
         removeButton.frame = CGRect(x: userPicture.frame.origin.x, y: userPicture.frame.origin.y + userPicture.frame.size.height, width: userPicture.frame.size.width, height: 20)
+
 
     }
 

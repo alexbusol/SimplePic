@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class PostCell: UITableViewCell {
     
@@ -31,7 +32,7 @@ class PostCell: UITableViewCell {
     //set constraints programatically
     func configureLayout() {
         
-        
+        likeButton.setTitleColor(UIColor.clear, for: UIControlState())
         //disable automatic autoresizing
         userAvatar.translatesAutoresizingMaskIntoConstraints = false
         usernameButton.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +108,61 @@ class PostCell: UITableViewCell {
         userAvatar.layer.cornerRadius = userAvatar.frame.size.width / 2
         userAvatar.clipsToBounds = true
     }
+    
+    //respond to pressing the like button
+    @IBAction func likeButton_pressed(_ sender: AnyObject) {
+        
+        let title = sender.title(for: UIControlState())
+        
+        //if the user did not like the post yet
+        if title == "unliked" {
+            
+            //recording a new like in the DB
+            let object = PFObject(className: "likes")
+            object["likedBy"] = PFUser.current()?.username
+            object["likeTo"] = uuidLabel.text
+            //saving the new data
+            object.saveInBackground(block: { (success, error) -> Void in
+                if success {
+                    //changing the like state
+                    self.likeButton.setTitle("liked", for: UIControlState())
+                    self.likeButton.setBackgroundImage(UIImage(named: "heart-2.png"), for: UIControlState())
 
+                    //send a notification to refresh the Post View and display the new data
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "liked"), object: nil)
+                } else {
+                    print(String(describing: error?.localizedDescription))
+                }
+            })
+            
+        //if the user already liked the post and wants to dislike ti
+        } else {
+            
+            //getting the existing like from the database
+            let query = PFQuery(className: "likes")
+            query.whereKey("likedBy", equalTo: PFUser.current()!.username!)
+            query.whereKey("likeTo", equalTo: uuidLabel.text!)
+            query.findObjectsInBackground { (objects, error) -> Void in
+                for object in objects! {
+                    
+                    //delete the user's like from the DB
+                    object.deleteInBackground(block: { (success, error) -> Void in
+                        if success {
+                            self.likeButton.setTitle("unliked", for: UIControlState())
+                            self.likeButton.setBackgroundImage(UIImage(named: "heart.png"), for: UIControlState())
+                           
+                            //send a notification to refresh the Post View and display the new data
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: "liked"), object: nil)
+                            
+                        } else {
+                            print(String(describing: error?.localizedDescription))
+                        }
+                    })
+                }
+            }
+            
+        }
+        
+    }
     
 }

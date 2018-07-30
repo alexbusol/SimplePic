@@ -35,6 +35,9 @@ class PostViewController: UITableViewController {
         backSwipe.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(backSwipe)
         
+        //receive notification from post cell to update data in the Post View
+        NotificationCenter.default.addObserver(self, selector: #selector(PostViewController.refresh), name: NSNotification.Name(rawValue: "liked"), object: nil)
+        
         //need to make the PostCell height dynamic depending on the amount
         //of text in the post description
 //        tableView.rowHeight = UITableViewAutomaticDimension
@@ -125,8 +128,33 @@ class PostViewController: UITableViewController {
         }
         
         
-        return postCell
+        //MARK: - Implementing 'like button' functionality
+        //changing the like button image depending whether the user liked the post
+        let didLike = PFQuery(className: "likes")
+        didLike.whereKey("likedBy", equalTo: PFUser.current()!.username!)
+        didLike.whereKey("likeTo", equalTo: postCell.uuidLabel.text!)
+        didLike.countObjectsInBackground { (count, error) -> Void in
+            //if no likes are found
+            if count == 0 {
+                //change the title and the background image
+                postCell.likeButton.setTitle("unliked", for: UIControlState())
+                postCell.likeButton.setBackgroundImage(UIImage(named: "heart.png"), for: UIControlState())
+            } else {
+                postCell.likeButton.setTitle("liked", for: UIControlState())
+                postCell.likeButton.setBackgroundImage(UIImage(named: "heart-2.png"), for: UIControlState())
+            }
         
+        }
+        
+        //count how many likes the post has received
+        let countLikes = PFQuery(className: "likes")
+        countLikes.whereKey("likeTo", equalTo: postCell.uuidLabel.text!)
+        countLikes.countObjectsInBackground { (count, error) -> Void in
+            //print("count = \(count)")
+            postCell.likeNumLabel.text = "\(count)"
+        }
+        
+        return postCell
     }
     
     @objc func goBack(_ sender: UIBarButtonItem) {
@@ -137,6 +165,10 @@ class PostViewController: UITableViewController {
         if !postToLoadUUID.isEmpty {
             postToLoadUUID.removeLast()
         }
+    }
+    
+    @objc func refresh() {
+        self.tableView.reloadData()
     }
 
     //number of cells

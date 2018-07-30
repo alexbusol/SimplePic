@@ -250,10 +250,10 @@
             </objects>
             <point key="canvasLocation" x="605" y="-168"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="KKw-Jg-nB3">
             <objects>
-                <tabBarController storyboardIdentifier="tabBar" id="ImE-pD-3Lz" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBar" id="ImE-pD-3Lz" customClass="TabBarViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xiq-Ul-qg0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -830,7 +830,7 @@
         <!--Item-->
         <scene sceneID="3ik-7M-pkg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Gp-5Z-2n7" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Gp-5Z-2n7" customClass="NavbarViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="t1H-Ya-2vp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nL9-qh-QHd">
@@ -900,10 +900,10 @@
             </objects>
             <point key="canvasLocation" x="3357" y="-289"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navbar View Controller-->
         <scene sceneID="83M-EQ-fPi">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YMl-QZ-bJn" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YMl-QZ-bJn" customClass="NavbarViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="STg-MU-nki">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -921,7 +921,7 @@
         <!--Item-->
         <scene sceneID="Hgy-Va-cSQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NLo-yt-URv" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NLo-yt-URv" customClass="NavbarViewController" customModule="SimplePic" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="8Gj-PY-Qxk"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4dL-fG-Isn">

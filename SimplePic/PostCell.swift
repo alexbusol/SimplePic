@@ -27,6 +27,13 @@ class PostCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        //declaring a double tap to like gesture
+        let doubleTap = UITapGestureRecognizer(target: self, action: "likeDoubleTap")
+        doubleTap.numberOfTapsRequired = 2
+        postImage.isUserInteractionEnabled = true
+        postImage.addGestureRecognizer(doubleTap)
+        
         configureLayout()
     }
     //set constraints programatically
@@ -109,7 +116,7 @@ class PostCell: UITableViewCell {
         userAvatar.clipsToBounds = true
     }
     
-    //respond to pressing the like button
+    //MARK: - Respond to pressing the like button
     @IBAction func likeButton_pressed(_ sender: AnyObject) {
         
         let title = sender.title(for: UIControlState())
@@ -163,6 +170,29 @@ class PostCell: UITableViewCell {
             
         }
         
+    }
+    
+    //MARK: - Double tap to like
+    @objc func likeDoubleTap() {
+        //adding an image that will pop over the post image for a moment
+        let likeOverlay = UIImageView(image: UIImage(named: "heart.png"))
+        //specifying where the overlaying image will be displayed
+        likeOverlay.frame.size.width = postImage.frame.size.width / 1.5
+        likeOverlay.frame.size.height = postImage.frame.size.width / 1.5
+        likeOverlay.center = postImage.center
+        //making it semi-transparent
+        likeOverlay.alpha = 0.7
+        
+        self.addSubview(likeOverlay)
+        
+        //adding the animation making the overlay disappear shortly after the double tap
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            likeOverlay.alpha = 0
+            likeOverlay.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        })
+        
+        likeButton_pressed(likeButton)
+
     }
     
 }

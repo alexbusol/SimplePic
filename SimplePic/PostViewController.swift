@@ -154,8 +154,9 @@ class PostViewController: UITableViewController {
             postCell.likeNumLabel.text = "\(count)"
         }
         
-        //assign an index to the username button
+        //assign an index to the username and comment buttons
         postCell.usernameButton.layer.setValue(indexPath, forKey: "index")
+        postCell.commentButton.layer.setValue(indexPath, forKey: "index")
         
         return postCell
     }
@@ -179,6 +180,22 @@ class PostViewController: UITableViewController {
         }
     }
     
+    //MARK: - Handling the comment button
+    @IBAction func commentButton_pressed(_ sender: UIButton) {
+        //get the comment button index
+        let i = sender.layer.value(forKey: "index") as! IndexPath
+        
+        let cell = tableView.cellForRow(at: i) as! PostCell
+        
+        //send the current username and the uuid to the global
+        //arrays in CommentViewController
+        commentUUID.append(cell.uuidLabel.text!)
+        commentOwner.append(cell.usernameButton.titleLabel!.text!)
+        
+        //send the user to CommentViewController
+        let comment = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+        self.navigationController?.pushViewController(comment, animated: true)
+    }
     
     @objc func goBack(_ sender: UIBarButtonItem) {
         //return to the previous viewController

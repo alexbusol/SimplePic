@@ -36,6 +36,8 @@
 		E6B402EF2107998800B4D656 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */; };
 		E6B402F1210799AC00B4D656 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402F0210799AC00B4D656 /* HeaderView.swift */; };
 		E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */; };
+		E6CE89F3211055F600FA9652 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE89F2211055F600FA9652 /* CommentViewController.swift */; };
+		E6CE89F52110561F00FA9652 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE89F42110561F00FA9652 /* CommentCell.swift */; };
 		E6D611A5210F18B000D0C5D9 /* NavbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D611A4210F18B000D0C5D9 /* NavbarViewController.swift */; };
 		E6D611A7210F18D100D0C5D9 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D611A6210F18D100D0C5D9 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +74,8 @@
 		E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		E6B402F0210799AC00B4D656 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		E6CE89F2211055F600FA9652 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		E6CE89F42110561F00FA9652 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		E6D611A4210F18B000D0C5D9 /* NavbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavbarViewController.swift; sourceTree = "<group>"; };
 		E6D611A6210F18D100D0C5D9 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +123,8 @@
 		E62345CD21061DEB009B3D80 /* SimplePic */ = {
 			isa = PBXGroup;
 			children = (
+				E6CE89F2211055F600FA9652 /* CommentViewController.swift */,
+				E6CE89F42110561F00FA9652 /* CommentCell.swift */,
 				E62345CE21061DEB009B3D80 /* AppDelegate.swift */,
 				E62345D221061DEB009B3D80 /* Main.storyboard */,
 				E62345D521061DEC009B3D80 /* Assets.xcassets */,
@@ -238,6 +244,8 @@
 				E66C1215210A274B000CE45E /* UploadViewController.swift in Sources */,
 				E6A0AB232106464000C9625F /* SignUpViewController.swift in Sources */,
 				E6D611A5210F18B000D0C5D9 /* NavbarViewController.swift in Sources */,
+				E6CE89F52110561F00FA9652 /* CommentCell.swift in Sources */,
+				E6CE89F3211055F600FA9652 /* CommentViewController.swift in Sources */,
 				E61835DE210C74460025C190 /* PostViewController.swift in Sources */,
 				E6A0AB212106462000C9625F /* SignInViewController.swift in Sources */,
 				E67D20762108A136000DF34A /* FollowerCell.swift in Sources */,

@@ -243,6 +243,8 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             
             //enable 'pull to refresh' functionality if there are more posts than the current page size
             //this way, 'loadAdditionalComments' will be called when the user pulls down
+            print(self.pageSize)
+            print(count)
             if self.pageSize < count {
                 self.refresh.addTarget(self, action: #selector(CommentViewController.loadAdditionalComments), for: UIControlEvents.valueChanged)
                 self.tableView.addSubview(self.refresh)
@@ -251,11 +253,11 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             //get the most recent posts for the page size
             let query = PFQuery(className: "comments")
             query.whereKey("to", equalTo: commentUUID.last!)
-            query.skip = count.distance(to: self.pageSize)
+            query.limit = Int(self.pageSize)
             query.addAscendingOrder("createdAt")
-            query.findObjectsInBackground(block: { (objects, erro) -> Void in
+            query.findObjectsInBackground(block: { (objects, error) -> Void in
                 if error == nil {
-                    
+                    print("went to if")
                     //clean he storage arrays
                     self.usernameArray.removeAll(keepingCapacity: false)
                     self.avatarArray.removeAll(keepingCapacity: false)
@@ -264,21 +266,26 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
                     
                     //place the CommentCell objects in the storage arrays
                     for object in objects! {
-                        self.usernameArray.append(object.object(forKey: "username") as! String)
-                        self.avatarArray.append(object.object(forKey: "avatar") as! PFFile)
-                        self.commentArray.append(object.object(forKey: "comment") as! String)
+                        self.usernameArray.append(object.value(forKey: "username") as! String)
+                        self.avatarArray.append(object.value(forKey: "avatar") as! PFFile)
+                        self.commentArray.append(object.value(forKey: "comment") as! String)
                         self.dateArray.append(object.createdAt)
                         self.tableView.reloadData()
                         
-                        //scroll tot he bottom of the comments that were loaded
-                        self.tableView.scrollToRow(at: IndexPath(row: self.commentArray.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
+                        //scroll to the bottom of the comments that were loaded
+                        //OPTIONAL. MAYBE BETTER WITHOUT IT
+//                        self.tableView.scrollToRow(at: IndexPath(row: self.commentArray.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
+                        
+                        //load more comments when reaching the bottom and there are more comments in the DB
+                        if self.pageSize < count {
+                            self.loadAdditionalComments()
+                        }
                     }
                 } else {
-                    print(error?.localizedDescription ?? String())
+                    print(String(describing: error?.localizedDescription))
                 }
             })
         })
-        
     }
     
     @objc func loadAdditionalComments() {
@@ -290,11 +297,6 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
           
             self.refresh.endRefreshing()
             
-            //disable 'pull to refresh' functionality the page size is larger than the total num of comments
-            if self.pageSize >= count {
-                self.refresh.removeFromSuperview()
-            }
-            
             //if there are more comments left to display, load more
             if self.pageSize < count {
                 
@@ -304,7 +306,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
                 //get the next pagesize comments from the server
                 let query = PFQuery(className: "comments")
                 query.whereKey("to", equalTo: commentUUID.last!)
-                query.skip = count.distance(to: self.pageSize)
+                query.limit = Int(self.pageSize)
                 query.addAscendingOrder("createdAt")
                 query.findObjectsInBackground(block: { (objects, error) -> Void in
                     if error == nil {

@@ -822,6 +822,12 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="commentDate" destination="SJR-hM-IDx" id="z7j-q7-Ccs"/>
+                                            <outlet property="commentLabel" destination="k5E-20-4zw" id="Yb1-y0-eFp"/>
+                                            <outlet property="userAvatar" destination="N0P-HW-XIa" id="qlD-Jl-4lL"/>
+                                            <outlet property="usernameButton" destination="vkL-5s-jpL" id="3Bw-91-Np7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

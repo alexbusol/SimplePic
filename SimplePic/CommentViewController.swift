@@ -229,7 +229,8 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             commentCell.commentDate.text = "\(String(describing: timeDifference.weekOfMonth!))w ago"
         }
         
-        
+        //getting current comment cell username index
+        commentCell.usernameButton.layer.setValue(indexPath, forKey: "index")
         return commentCell
     }
     
@@ -364,5 +365,23 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         commentTextField.frame.origin.y = sendButton.frame.origin.y
         tableView.frame.size.height = self.tableViewHeight - self.keyboard.height - self.commentTextField.frame.size.height + self.commentHeight
         
+    }
+    
+    //handling clikcing on the username
+    @IBAction func usernameButton_pressed(_ sender: UIButton) {
+    
+        //get the index of the current username in the CommentCell
+        let i = sender.layer.value(forKey: "index") as! IndexPath
+        let cell = tableView.cellForRow(at: i) as! CommentCell
+        
+        //send the user to either home or guest view, depending on the comment author
+        if cell.usernameButton.titleLabel?.text == PFUser.current()?.username {
+            let goHome = self.storyboard?.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+            self.navigationController?.pushViewController(goHome, animated: true)
+        } else {
+            guestUsername.append(cell.usernameButton.titleLabel!.text!)
+            let goGuest = self.storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
+            self.navigationController?.pushViewController(goGuest, animated: true)
+        }
     }
 }

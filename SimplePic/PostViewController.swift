@@ -164,7 +164,7 @@ class PostViewController: UITableViewController {
     //reacting to pressing on the username
     @IBAction func username_pressed(_ sender: UIButton) {
         
-        //get the index of the current username in the cell
+        //get the index of the current username in the PostCell
         let i = sender.layer.value(forKey: "index") as! IndexPath
         
         let cell = tableView.cellForRow(at: i) as! PostCell

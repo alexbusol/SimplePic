@@ -13,7 +13,7 @@ import Parse
 var commentUUID = [String]()
 var commentOwner = [String]()
 
-class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDelegate {
+class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var commentTextField: UITextView!
@@ -28,7 +28,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
     
     //storage arrays for data received from the Database
     var usernameArray = [String]()
-    var avaArray = [PFFile]()
+    var avatarArray = [PFFile]()
     var commentArray = [String]()
     var dateArray = [Date?]()
     
@@ -44,6 +44,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         //configuring the delegates
         commentTextField.delegate = self
         tableView.delegate = self
+        tableView.dataSource = self
      
         //set the navbar title
         self.navigationItem.title = "COMMENTS"
@@ -64,8 +65,9 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         
         //disable the send button at the beginning when no comment text is entered
         sendButton.isEnabled = false
-        
+    
         configureLayout()
+        loadComments()
     }
     
     //gets called when the commentview appears
@@ -176,5 +178,189 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             }
         }
     }
+    
+    //return the number of rows our table view will show
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return commentArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    //MARK: - Filling the comment cell with information
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let commentCell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CommentCell
+        
+        //populating the comment cell with user information
+        commentCell.usernameButton.setTitle(usernameArray[indexPath.row], for: UIControlState())
+        commentCell.usernameButton.sizeToFit()
+        commentCell.commentLabel.text = commentArray[indexPath.row]
+        avatarArray[indexPath.row].getDataInBackground { (data, error) -> Void in
+            if error == nil {
+                commentCell.userAvatar.image = UIImage(data: data!)
+            } else {
+                print(String(describing: error?.localizedDescription))
+            }
+        }
+        
+        //calculating the time since a comment was posted
+        let commentPosted = dateArray[indexPath.row]
+        let currentDate = Date()
+        let timeComponents : NSCalendar.Unit = [.second, .minute, .hour, .day, .weekOfMonth]
+        let timeDifference = (Calendar.current as NSCalendar).components(timeComponents, from: commentPosted!, to: currentDate, options: [])
+        
+        if timeDifference.second! <= 0 {
+            commentCell.commentDate.text = "now"
+        }
+        if timeDifference.second! > 0 && timeDifference.minute! == 0 {
+            commentCell.commentDate.text = "\(String(describing: timeDifference.second!))s ago"
+        }
+        if timeDifference.minute! > 0 && timeDifference.hour! == 0 {
+            commentCell.commentDate.text = "\(String(describing: timeDifference.minute!))m ago"
+        }
+        if timeDifference.hour! > 0 && timeDifference.day! == 0 {
+            commentCell.commentDate.text = "\(String(describing: timeDifference.hour!))h ago"
+        }
+        if timeDifference.day! > 0 && timeDifference.weekOfMonth! == 0 {
+            commentCell.commentDate.text = "\(String(describing: timeDifference.day!))d ago"
+        }
+        if timeDifference.weekOfMonth! > 0 {
+            commentCell.commentDate.text = "\(String(describing: timeDifference.weekOfMonth!))w ago"
+        }
+        
+        
+        return commentCell
+    }
+    
+    //MARK: - Load the post comments from the database
+    func loadComments() {
+        
+        //count the total number of comments for the post in the database
+        let commentQuery = PFQuery(className: "comments")
+        commentQuery.whereKey("to", equalTo: commentUUID.last!)
+        commentQuery.countObjectsInBackground (block: { (count, error) -> Void in
+            
+            //enable 'pull to refresh' functionality if there are more posts than the current page size
+            //this way, 'loadAdditionalComments' will be called when the user pulls down
+            if self.pageSize < count {
+                self.refresh.addTarget(self, action: #selector(CommentViewController.loadAdditionalComments), for: UIControlEvents.valueChanged)
+                self.tableView.addSubview(self.refresh)
+            }
+            
+            //get the most recent posts for the page size
+            let query = PFQuery(className: "comments")
+            query.whereKey("to", equalTo: commentUUID.last!)
+            query.skip = count.distance(to: self.pageSize)
+            query.addAscendingOrder("createdAt")
+            query.findObjectsInBackground(block: { (objects, erro) -> Void in
+                if error == nil {
+                    
+                    //clean he storage arrays
+                    self.usernameArray.removeAll(keepingCapacity: false)
+                    self.avatarArray.removeAll(keepingCapacity: false)
+                    self.commentArray.removeAll(keepingCapacity: false)
+                    self.dateArray.removeAll(keepingCapacity: false)
+                    
+                    //place the CommentCell objects in the storage arrays
+                    for object in objects! {
+                        self.usernameArray.append(object.object(forKey: "username") as! String)
+                        self.avatarArray.append(object.object(forKey: "avatar") as! PFFile)
+                        self.commentArray.append(object.object(forKey: "comment") as! String)
+                        self.dateArray.append(object.createdAt)
+                        self.tableView.reloadData()
+                        
+                        //scroll tot he bottom of the comments that were loaded
+                        self.tableView.scrollToRow(at: IndexPath(row: self.commentArray.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
+                    }
+                } else {
+                    print(error?.localizedDescription ?? String())
+                }
+            })
+        })
+        
+    }
+    
+    @objc func loadAdditionalComments() {
+        //count the total number of comments
+        let countQuery = PFQuery(className: "comments")
+        countQuery.whereKey("to", equalTo: commentUUID.last!)
+        countQuery.countObjectsInBackground (block: { (count, error) -> Void in
+            
+          
+            self.refresh.endRefreshing()
+            
+            //disable 'pull to refresh' functionality the page size is larger than the total num of comments
+            if self.pageSize >= count {
+                self.refresh.removeFromSuperview()
+            }
+            
+            //if there are more comments left to display, load more
+            if self.pageSize < count {
+                
+                //increase the page size
+                self.pageSize = self.pageSize + 15
+                
+                //get the next pagesize comments from the server
+                let query = PFQuery(className: "comments")
+                query.whereKey("to", equalTo: commentUUID.last!)
+                query.skip = count.distance(to: self.pageSize)
+                query.addAscendingOrder("createdAt")
+                query.findObjectsInBackground(block: { (objects, error) -> Void in
+                    if error == nil {
+                        
+                        //clean the previous comments fromt the storage array
+                        self.usernameArray.removeAll(keepingCapacity: false)
+                        self.avatarArray.removeAll(keepingCapacity: false)
+                        self.commentArray.removeAll(keepingCapacity: false)
+                        self.dateArray.removeAll(keepingCapacity: false)
+                        
+                        // find related objects
+                        for object in objects! {
+                            self.usernameArray.append(object.object(forKey: "username") as! String)
+                            self.avatarArray.append(object.object(forKey: "avatar") as! PFFile)
+                            self.commentArray.append(object.object(forKey: "comment") as! String)
+                            self.dateArray.append(object.createdAt)
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        print(error?.localizedDescription ?? String())
+                    }
+                })
+            }
+            
+        })
+        
+    }
 
+    
+    //MARK: - Placing the comment in the CommentView and sending it to the server
+    @IBAction func sendButton_pressed(_ sender: UIButton) {
+        //Place the newly created comment in the Table View
+        usernameArray.append(PFUser.current()!.username!)
+        avatarArray.append(PFUser.current()?.object(forKey: "avatar") as! PFFile)
+        dateArray.append(Date())
+        commentArray.append(commentTextField.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+        tableView.reloadData()
+        
+        //send the comment to the server
+        let commentToSend = PFObject(className: "comments")
+        commentToSend["to"] = commentUUID.last
+        commentToSend["username"] = PFUser.current()?.username
+        commentToSend["avatar"] = PFUser.current()?.value(forKey: "avatar")
+        commentToSend["comment"] = commentTextField.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        commentToSend.saveEventually()
+        
+
+        //scroll to bottom of the comment view
+        self.tableView.scrollToRow(at: IndexPath(item: commentArray.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
+        
+        //reset the CommentView to default values
+        sendButton.isEnabled = false
+        commentTextField.text = ""
+        commentTextField.frame.size.height = commentHeight
+        commentTextField.frame.origin.y = sendButton.frame.origin.y
+        tableView.frame.size.height = self.tableViewHeight - self.keyboard.height - self.commentTextField.frame.size.height + self.commentHeight
+        
+    }
 }

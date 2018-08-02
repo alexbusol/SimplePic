@@ -384,4 +384,49 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             self.navigationController?.pushViewController(goGuest, animated: true)
         }
     }
+    
+    
+    //MARK: - Implement 'swipe left to see more actions for' comments
+    
+    //make table cells editable
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let commentCell = tableView.cellForRow(at: indexPath) as! CommentCell
+        
+        //define a delete function
+        let delete = UITableViewRowAction(style: .normal, title: "delete") { (action:UITableViewRowAction, indexPath:IndexPath) -> Void in
+            
+            //if delete is selected, delete it from the server
+            
+            //query the database for the comment
+            let commentQuery = PFQuery(className: "comments")
+            commentQuery.whereKey("to", equalTo: commentUUID.last!)
+            commentQuery.whereKey("comment", equalTo: commentCell.commentLabel.text!)
+            commentQuery.findObjectsInBackground (block: { (objects, error) -> Void in
+                if error == nil {
+                    //delete the results of the query
+                    for object in objects! {
+                        object.deleteEventually()
+                    }
+                } else {
+                    print(error!.localizedDescription)
+                }
+            })
+            
+            //delete the comment from the table view with animation
+            self.commentArray.remove(at: indexPath.row)
+            self.dateArray.remove(at: indexPath.row)
+            self.usernameArray.remove(at: indexPath.row)
+            self.avatarArray.remove(at: indexPath.row)
+            
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
+        
+        
+        return [delete]
+    }
 }

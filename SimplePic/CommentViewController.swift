@@ -386,7 +386,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
     }
     
     
-    //MARK: - Implement 'swipe left to see more actions for' comments
+    //MARK: - Implement 'swipe left to see more actions' for comments
     
     //make table cells editable
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -397,7 +397,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         
         let commentCell = tableView.cellForRow(at: indexPath) as! CommentCell
         
-        //define a delete function
+        //implementing a 'delete' function
         let delete = UITableViewRowAction(style: .normal, title: "delete") { (action:UITableViewRowAction, indexPath:IndexPath) -> Void in
             
             //if delete is selected, delete it from the server
@@ -426,7 +426,60 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             tableView.deleteRows(at: [indexPath], with: .left)
         }
         
+        //implementing a 'reply' function
+        let reply = UITableViewRowAction(style: .normal, title: "reply") { (action:UITableViewRowAction, indexPath:IndexPath) -> Void in
+            
+            //change the existing comment to include the username int
+            self.commentTextField.text = "\(self.commentTextField.text + "@" + self.usernameArray[indexPath.row] + " ")"
+            self.sendButton.isEnabled = true
+
+            tableView.setEditing(false, animated: true)
+        }
         
-        return [delete]
+        //implementing 'report the comment'
+        let report = UITableViewRowAction(style: .normal, title: "report") { (action:UITableViewRowAction, indexPath:IndexPath) -> Void in
+            
+            //record the complaint in the database
+            let complaint = PFObject(className: "complaint")
+            complaint["by"] = PFUser.current()?.username
+            complaint["about"] = commentCell.commentLabel.text
+            complaint["owner"] = commentCell.usernameButton.titleLabel?.text
+            complaint.saveInBackground(block: { (success, error) -> Void in
+                if success {
+                    self.showAlert(error: "Report successful", message: "Thank You! We will investigate your complaint")
+                } else {
+                    self.showAlert(error: "Unable to report the comment", message: error!.localizedDescription)
+                }
+            })
+
+            tableView.setEditing(false, animated: true)
+        }
+        
+        //show different options depending on the user
+        //user's own comment
+        if commentCell.usernameButton.titleLabel?.text == PFUser.current()?.username {
+            return [delete, reply]
+        }
+            
+        //somebody else's comment under the current user's post
+        else if commentOwner.last == PFUser.current()?.username {
+            return [delete, reply, report]
+        }
+            
+        //somebody else's comment under another user's post
+        else  {
+            return [reply, report]
+        }
+        
+        
+        
+    }
+    
+    //shows an alert with error and message that were passed
+    func showAlert(error: String, message: String) {
+        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertButton)
+        self.present(alert, animated: true, completion: nil)
     }
 }

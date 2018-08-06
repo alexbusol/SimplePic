@@ -41,6 +41,7 @@
 		E6D611A5210F18B000D0C5D9 /* NavbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D611A4210F18B000D0C5D9 /* NavbarViewController.swift */; };
 		E6D611A7210F18D100D0C5D9 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D611A6210F18D100D0C5D9 /* TabBarViewController.swift */; };
 		E6D6DEFA211882AE0093A312 /* KILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D6DEF8211882AE0093A312 /* KILabel.m */; };
+		E6D6DEFC2118AEF30093A312 /* HashtagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6DEFB2118AEF30093A312 /* HashtagViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		E6D6DEF7211882AD0093A312 /* SimplePic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimplePic-Bridging-Header.h"; sourceTree = "<group>"; };
 		E6D6DEF8211882AE0093A312 /* KILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KILabel.m; sourceTree = "<group>"; };
 		E6D6DEF9211882AE0093A312 /* KILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KILabel.h; sourceTree = "<group>"; };
+		E6D6DEFB2118AEF30093A312 /* HashtagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		E62345CD21061DEB009B3D80 /* SimplePic */ = {
 			isa = PBXGroup;
 			children = (
+				E6D6DEFB2118AEF30093A312 /* HashtagViewController.swift */,
 				E6CE89F2211055F600FA9652 /* CommentViewController.swift */,
 				E6CE89F42110561F00FA9652 /* CommentCell.swift */,
 				E62345CE21061DEB009B3D80 /* AppDelegate.swift */,
@@ -264,6 +267,7 @@
 				E67D20782108D033000DF34A /* GuestViewController.swift in Sources */,
 				E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */,
 				E6A0AB252106465C00C9625F /* ResetPWViewController.swift in Sources */,
+				E6D6DEFC2118AEF30093A312 /* HashtagViewController.swift in Sources */,
 				E6B402EF2107998800B4D656 /* HomeScreenViewController.swift in Sources */,
 				E6B402F1210799AC00B4D656 /* HeaderView.swift in Sources */,
 			);

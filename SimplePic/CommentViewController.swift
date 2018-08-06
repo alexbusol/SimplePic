@@ -246,6 +246,21 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             }
         }
         
+        //if a hashtag in the comment body is tapped
+        
+        commentCell.commentLabel.hashtagLinkTapHandler = { label, handle, range in
+            var hashtag = handle
+            hashtag = String(hashtag.dropFirst())
+            
+            //storing the hashtag in the storage array inside Hashtag View Controller
+            //will be used to display all the relevant info
+            hashtagArray.append(hashtag.lowercased())
+            
+            //sending the user to the HashtagViewController
+            let goHashtag = self.storyboard?.instantiateViewController(withIdentifier: "HashtagViewController") as! HashtagViewController
+            self.navigationController?.pushViewController(goHashtag, animated: true)
+        }
+        
         //getting current comment cell username index
         commentCell.usernameButton.layer.setValue(indexPath, forKey: "index")
         return commentCell

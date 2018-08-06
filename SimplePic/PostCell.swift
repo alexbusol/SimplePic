@@ -75,6 +75,10 @@ class PostCell: UITableViewCell {
             withVisualFormat: "V:|-15-[date]",
             options: [], metrics: nil, views: ["date":postDateLabel]))
         
+//        self.contentView.addConstraints(NSLayoutConstraint.constraints(
+//            withVisualFormat: "V:|-550-[title]",
+//            options: [], metrics: nil, views: ["title":descriptionLabel]))
+        
         self.contentView.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:[like]-5-[title]-5-|",
             options: [], metrics: nil, views: ["like":likeButton, "title":descriptionLabel]))

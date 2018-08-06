@@ -82,6 +82,7 @@ class PostViewController: UITableViewController {
         postCell.uuidLabel.text = uuidArray[indexPath.row]
         postCell.descriptionLabel.text = descriptionArray[indexPath.row]
         postCell.descriptionLabel.sizeToFit()
+        
         userAvatarArray[indexPath.row].getDataInBackground { (data, error) in
             if error == nil {
                 postCell.userAvatar.image = UIImage(data: data!)
@@ -173,6 +174,21 @@ class PostViewController: UITableViewController {
                 let goGuest = self.storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
                 self.navigationController?.pushViewController(goGuest, animated: true)
             }
+        }
+        
+        //if a hashtag in the post description is tapped
+        
+        postCell.descriptionLabel.hashtagLinkTapHandler = { label, handle, range in
+            var hashtag = handle
+            hashtag = String(hashtag.dropFirst())
+            
+            //storing the hashtag in the storage array inside Hashtag View Controller
+            //will be used to display all the relevant info
+            hashtagArray.append(hashtag.lowercased())
+            
+            //sending the user to the HashtagViewController
+            let goHashtag = self.storyboard?.instantiateViewController(withIdentifier: "HashtagViewController") as! HashtagViewController
+            self.navigationController?.pushViewController(goHashtag, animated: true)
         }
         
         return postCell

@@ -159,6 +159,36 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         let imageFile = PFFile(name: "post.jpg", data: imageToPost!)
         object["pic"] = imageFile
         
+        //MARK: - if there's a hashtag in the post description, record it in the database
+        let postDescriptionWords : [String] = titleTextView.text!.components(separatedBy: CharacterSet.whitespacesAndNewlines)
+        
+        //parse the comment text
+        for var word in postDescriptionWords {
+            
+            //make sure that the current word is a hashtag
+            if word.hasPrefix("#") {
+                
+                //remove the # symbol from the word
+                word = word.trimmingCharacters(in: CharacterSet.punctuationCharacters)
+                word = word.trimmingCharacters(in: CharacterSet.symbols)
+                
+                //save the new hashtag in the database
+                let hashtag = PFObject(className: "hashtags")
+                hashtag["toComment"] = "\(PFUser.current()!.username!) \(uuid)"
+                hashtag["byUser"] = PFUser.current()?.username
+                hashtag["hashtag"] = word.lowercased()
+                hashtag["comment"] = titleTextView.text
+                
+                hashtag.saveInBackground(block: { (success, error) -> Void in
+                    if success {
+                        print("hashtag \(word) is created")
+                    } else {
+                        print(error!.localizedDescription)
+                    }
+                })
+            }
+        }
+        
         
         //save the new post on the server in the POSTS class
         object.saveInBackground (block: { (success, error) -> Void in

@@ -158,6 +158,23 @@ class PostViewController: UITableViewController {
         postCell.usernameButton.layer.setValue(indexPath, forKey: "index")
         postCell.commentButton.layer.setValue(indexPath, forKey: "index")
         
+        //implementing @ mentions
+        postCell.descriptionLabel.userHandleLinkTapHandler = { label, handle, range in
+            var mention = handle
+            mention = String(mention.dropFirst()) //drop the @ symbol
+            
+            //if the @mention is referring to the current user, go to the homescreen view controller
+            if mention.lowercased() == PFUser.current()?.username {
+                let goHome = self.storyboard?.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+                self.navigationController?.pushViewController(goHome, animated: true)
+            } else {
+                //else, direct the user to the profile mentioned
+                guestUsername.append(mention.lowercased())
+                let goGuest = self.storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
+                self.navigationController?.pushViewController(goGuest, animated: true)
+            }
+        }
+        
         return postCell
     }
     

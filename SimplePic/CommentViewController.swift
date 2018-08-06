@@ -373,6 +373,37 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         commentToSend["comment"] = commentTextField.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         commentToSend.saveEventually()
         
+        //MARK: - if there's a hashtag in the comment, record it in the database
+        let commentWords : [String] = commentTextField.text!.components(separatedBy: CharacterSet.whitespacesAndNewlines)
+        
+        //parse the comment text
+        for var word in commentWords {
+            
+            //make sure that the current word is a hashtag
+            if word.hasPrefix("#") {
+                
+                //remove the # symbol from the word
+                word = word.trimmingCharacters(in: CharacterSet.punctuationCharacters)
+                word = word.trimmingCharacters(in: CharacterSet.symbols)
+                
+                //save the new hashtag in the database
+                let hashtag = PFObject(className: "hashtags")
+                hashtag["toComment"] = commentUUID.last
+                hashtag["byUser"] = PFUser.current()?.username
+                hashtag["hashtag"] = word.lowercased()
+                hashtag["comment"] = commentTextField.text
+                
+                hashtag.saveInBackground(block: { (success, error) -> Void in
+                    if success {
+                        print("hashtag \(word) is created")
+                    } else {
+                        print(error!.localizedDescription)
+                    }
+                })
+            }
+        }
+        
+        
 
         //scroll to bottom of the comment view
         self.tableView.scrollToRow(at: IndexPath(item: commentArray.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
@@ -433,6 +464,17 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
                     }
                 } else {
                     print(error!.localizedDescription)
+                }
+            })
+            
+            //removing the comment's hashtags from the database if the comment is deleted
+            let hashtagQuery = PFQuery(className: "hashtags")
+            hashtagQuery.whereKey("toComment", equalTo: commentUUID.last!)
+            hashtagQuery.whereKey("byUser", equalTo: commentCell.usernameButton.titleLabel!.text!)
+            hashtagQuery.whereKey("comment", equalTo: commentCell.commentLabel.text!)
+            hashtagQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                for object in objects! {
+                    object.deleteEventually()
                 }
             })
             

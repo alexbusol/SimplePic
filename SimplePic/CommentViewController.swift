@@ -522,9 +522,9 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             complaint["owner"] = commentCell.usernameButton.titleLabel?.text
             complaint.saveInBackground(block: { (success, error) -> Void in
                 if success {
-                    self.showAlert(error: "Report successful", message: "Thank You! We will investigate your complaint")
+                    self.showAlert(title: "Report successful", message: "Thank You! We will investigate your complaint")
                 } else {
-                    self.showAlert(error: "Unable to report the comment", message: error!.localizedDescription)
+                    self.showAlert(title: "Unable to report the comment", message: error!.localizedDescription)
                 }
             })
 
@@ -552,8 +552,8 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)

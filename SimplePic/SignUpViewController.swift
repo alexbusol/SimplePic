@@ -153,26 +153,26 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         
         //if email is incorrect
         if !validateEmail(userEmailTextField.text!) {
-            showAlert(error: "Incorrect email", message: "Please make sure the email is in the form of: user@email.com")
+            showAlert(title: "Incorrect email", message: "Please make sure the email is in the form of: user@email.com")
             return
         }
         
         //if website address is incorrect
         if !validateWeb(websiteTextfField.text!) {
-            showAlert(error: "Incorrect website address", message: "Please make sure the website is in the form of: www.website.com")
+            showAlert(title: "Incorrect website address", message: "Please make sure the website is in the form of: www.website.com")
             return
         }
         
         
         //show an alert if some of required fields arent filled out
         if  (usernameTextfField.text!.isEmpty || passwordTextfField.text!.isEmpty || repeatPWTextfField.text!.isEmpty || userEmailTextField.text!.isEmpty || bioTextfField.text!.isEmpty || fullNameTextfField.text!.isEmpty) {
-            showAlert(error: "Error", message: "Please fill out all required text fields")
+            showAlert(title: "Error", message: "Please fill out all required text fields")
             return //exiting the function if a critical error is encountered
         }
         
         //show an alert if the two passwords dont match
         if passwordTextfField.text != repeatPWTextfField.text {
-            showAlert(error: "Passwords don't match", message: "Please try again")
+            showAlert(title: "Passwords don't match", message: "Please try again")
             return  //exiting the function if a critical error is encountered
         }
         
@@ -211,7 +211,7 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
                 
             } else {
                 //tell the user that registration failed
-                self.showAlert(error: "Registration Failed", message: error!.localizedDescription)
+                self.showAlert(title: "Registration Failed", message: error!.localizedDescription)
             }
         }
         
@@ -224,8 +224,8 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)

@@ -39,14 +39,14 @@ class ResetPWViewController: UIViewController {
             PFUser.requestPasswordResetForEmail(inBackground: emailText) { (success, error) -> Void in
                 if success {
                     //tell the user to check the email to complete the reset
-                    self.showAlert(error: "Confirm reset", message: "An email with a link has been sent to \(emailText). Click on the link to complete the password reset")
+                    self.showAlert(title: "Confirm reset", message: "An email with a link has been sent to \(emailText). Click on the link to complete the password reset")
                 } else {
-                    self.showAlert(error: "Password reset failed", message: error!.localizedDescription)
+                    self.showAlert(title: "Password reset failed", message: error!.localizedDescription)
                 }
             }
         } else {
             //email text field is empty
-            showAlert(error: "Email is empty", message: "Please enter your email to reset the password")
+            showAlert(title: "Email is empty", message: "Please enter your email to reset the password")
         }
     }
     @IBAction func cancelPressed(_ sender: UIButton) {
@@ -55,8 +55,8 @@ class ResetPWViewController: UIViewController {
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)

@@ -172,8 +172,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)
@@ -235,13 +235,13 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         //if email is incorrect
         if !validateEmail(emailTextField.text!) {
-            showAlert(error: "Incorrect email", message: "Please make sure the email is in the form of: user@email.com")
+            showAlert(title: "Incorrect email", message: "Please make sure the email is in the form of: user@email.com")
             return
         }
         
         //if website address is incorrect
         if !validateWeb(webTextField.text!) {
-            showAlert(error: "Incorrect website address", message: "Please make sure the website is in the form of: www.website.com")
+            showAlert(title: "Incorrect website address", message: "Please make sure the website is in the form of: www.website.com")
             return
         }
         

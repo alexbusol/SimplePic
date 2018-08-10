@@ -313,14 +313,14 @@ class HomeScreenViewController: UICollectionViewController {
                 let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.window?.rootViewController = signInVC
             } else {
-                self.showAlert(error: "Logout failed", message: "There was an error logging out. \(error?.localizedDescription)")
+                self.showAlert(title: "Logout failed", message: "There was an error logging out. \(error?.localizedDescription)")
             }
         }
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)

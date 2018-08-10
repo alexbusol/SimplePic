@@ -184,7 +184,7 @@ class GuestViewController: UICollectionViewController {
             if error == nil {
                 //wrong request. unable to find the user data for the username
                 if objects!.isEmpty {
-                    self.showAlert(error: "\(guestUsername.last!.uppercased())", message: " does not exist. The user has probably deleted the account.")
+                    self.showAlert(title: "\(guestUsername.last!.uppercased())", message: " does not exist. The user has probably deleted the account.")
                 }
                 
                 //if the user data has been found, place it in the view
@@ -320,8 +320,8 @@ class GuestViewController: UICollectionViewController {
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)

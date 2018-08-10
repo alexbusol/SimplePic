@@ -27,7 +27,7 @@ class SignInViewController: UIViewController {
         
         //show an alert if the login fields are empty
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            showAlert(error: "Login Error", message: "Login or password fields are empty")
+            showAlert(title: "Login Error", message: "Login or password fields are empty")
         }
         
         //MARK: - Login using Parse. We pass in the username and password textfields' contents.
@@ -45,7 +45,7 @@ class SignInViewController: UIViewController {
                 
             } else {
                 print("login error")
-                self.showAlert(error: "Login Error", message: "Unable to login. Please verify your username and password and try again.")
+                self.showAlert(title: "Login Error", message: "Unable to login. Please verify your username and password and try again.")
             }
         }
     }
@@ -77,8 +77,8 @@ class SignInViewController: UIViewController {
     }
     
     //shows an alert with error and message that were passed
-    func showAlert(error: String, message: String) {
-        let alert = UIAlertController(title: error, message: message, preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertButton)
         self.present(alert, animated: true, completion: nil)

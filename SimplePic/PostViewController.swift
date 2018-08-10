@@ -256,7 +256,7 @@ class PostViewController: UITableViewController {
 
         let cell = tableView.cellForRow(at: i) as! PostCell
         
-        //MARK: - Implementing delete post
+        //MARK: - Implementing 'Delete post'
 
         let delete = UIAlertAction(title: "Delete post", style: .default) { (UIAlertAction) -> Void in
             
@@ -324,17 +324,49 @@ class PostViewController: UITableViewController {
             })
         }
         
+        //MARK: - Implementing 'report inappropriate post'
+        let complaint = UIAlertAction(title: "Report this post", style: .default) { (UIAlertAction) -> Void in
+            
+            // send complain to server
+            let complainObject = PFObject(className: "complaint")
+            complainObject["by"] = PFUser.current()?.username
+            complainObject["about"] = cell.uuidLabel.text
+            complainObject["owner"] = cell.usernameButton.titleLabel?.text
+            complainObject.saveInBackground(block: { (success, error) -> Void in
+                if success {
+                    self.showAlert(title: "Report successful", message: "Thank You! We will investigate your complaint")
+                } else {
+                    self.showAlert(title: "Error", message: error!.localizedDescription)
+                }
+            })
+        }
+        
+        
         //define a menu that will be shown when the button is pressed
         let menu = UIAlertController(title: "More options", message: nil, preferredStyle: .actionSheet)
         //add a cancel option
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         //assign the available actions to the menu
-        menu.addAction(delete)
-        menu.addAction(cancel)
+        //make sure that users can delete only their own posts
+        if cell.usernameButton.titleLabel?.text == PFUser.current()?.username {
+            menu.addAction(delete)
+            menu.addAction(cancel)
+        } else {
+            menu.addAction(complaint)
+            menu.addAction(cancel)
+        }
         
         //present the menu with the options
         self.present(menu, animated: true, completion: nil)
+    }
+    
+    //shows an alert with error and message that were passed
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertButton)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

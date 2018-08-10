@@ -41,13 +41,16 @@ class FeedViewController: UITableViewController {
         //receiving notification from UploadViewController
         NotificationCenter.default.addObserver(self, selector: #selector(FeedViewController.updateTableView), name: NSNotification.Name(rawValue: "uploadedPost"), object: nil)
         
+        //receive notification from Post Cell when picture is liked
+        NotificationCenter.default.addObserver(self, selector: #selector(FeedViewController.refresh), name: NSNotification.Name(rawValue: "liked"), object: nil)
+        
         //placing the indicator in the center horizontally
         indicator.center.x = tableView.center.x
         
         loadPosts()
     }
     
-    func refresh() {
+    @objc func refresh() {
         tableView.reloadData()
     }
 

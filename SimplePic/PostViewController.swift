@@ -277,7 +277,7 @@ class PostViewController: UITableViewController {
                         object.deleteInBackground(block: { (success, error) -> Void in
                             if success {
                                 //update the collection view
-                                NotificationCenter.default.post(name: Notification.Name(rawValue: "uploaded"), object: nil)
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "uploadedPost"), object: nil)
                                 //return to the previous view controller
                                 _ = self.navigationController?.popViewController(animated: true)
                             } else {

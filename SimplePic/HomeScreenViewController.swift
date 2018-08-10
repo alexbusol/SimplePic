@@ -37,7 +37,9 @@ class HomeScreenViewController: UICollectionViewController {
         collectionView?.addSubview(toRefresh)
     
         //receiving notification from UploadViewController
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeScreenViewController.uploadedPost), name: NSNotification.Name(rawValue: "uploadedPost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeScreenViewController.updateCollectionView), name: NSNotification.Name(rawValue: "uploadedPost"), object: nil)
+        //receiving notification from post view controller after post deletion
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeScreenViewController.updateCollectionView), name: NSNotification.Name(rawValue: "deletedPost"), object: nil)
         
         //load the posts when open the homescreen
         loadPosts()
@@ -46,7 +48,7 @@ class HomeScreenViewController: UICollectionViewController {
     
     
     //MARK: - Making sure that all the date is up-to-date every time the user sees HomeViewController
-    override func  viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.collectionView?.reloadData()
     }
     
@@ -57,7 +59,7 @@ class HomeScreenViewController: UICollectionViewController {
     }
     
     //refreshing the user posts after a new one has been added
-    @objc func uploadedPost() {
+    @objc func updateCollectionView() {
         loadPosts()
     }
 

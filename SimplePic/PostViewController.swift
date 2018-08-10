@@ -155,9 +155,10 @@ class PostViewController: UITableViewController {
             postCell.likeNumLabel.text = "\(count)"
         }
         
-        //assign an index to the username and comment buttons
+        //assign an index to the username, comment and more buttons
         postCell.usernameButton.layer.setValue(indexPath, forKey: "index")
         postCell.commentButton.layer.setValue(indexPath, forKey: "index")
+        postCell.moreButton.layer.setValue(indexPath, forKey: "index")
         
         //implementing @ mentions
         postCell.descriptionLabel.userHandleLinkTapHandler = { label, handle, range in
@@ -248,4 +249,92 @@ class PostViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userNameArray.count
     }
+    
+    @IBAction func moreButton_pressed(_ sender: UIButton) {
+        //get the index for more button
+        let i = sender.layer.value(forKey: "index") as! IndexPath
+
+        let cell = tableView.cellForRow(at: i) as! PostCell
+        
+        //MARK: - Implementing delete post
+
+        let delete = UIAlertAction(title: "Delete post", style: .default) { (UIAlertAction) -> Void in
+            
+            //Delete the row with the post from the table view
+            self.userNameArray.remove(at: i.row)
+            self.userAvatarArray.remove(at: i.row)
+            self.postDateArray.remove(at: i.row)
+            self.postPictureArray.remove(at: i.row)
+            self.descriptionArray.remove(at: i.row)
+            self.uuidArray.remove(at: i.row)
+            
+            //Delete the post from the server
+            let postQuery = PFQuery(className: "posts")
+            postQuery.whereKey("uuid", equalTo: cell.uuidLabel.text!)
+            postQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                if error == nil {
+                    for object in objects! {
+                        object.deleteInBackground(block: { (success, error) -> Void in
+                            if success {
+                                //update the collection view
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "uploaded"), object: nil)
+                                //return to the previous view controller
+                                _ = self.navigationController?.popViewController(animated: true)
+                            } else {
+                                print(error!.localizedDescription)
+                            }
+                        })
+                    }
+                } else {
+                    print(error?.localizedDescription ?? String())
+                }
+            })
+            
+            //delete the post likes from the server
+            let likeQuery = PFQuery(className: "likes")
+            likeQuery.whereKey("to", equalTo: cell.uuidLabel.text!)
+            likeQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                if error == nil {
+                    for object in objects! {
+                        object.deleteEventually()
+                    }
+                }
+            })
+            
+            //delete the post comments from the server
+            let commentQuery = PFQuery(className: "comments")
+            commentQuery.whereKey("likeTo", equalTo: cell.uuidLabel.text!)
+            commentQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                if error == nil {
+                    for object in objects! {
+                        object.deleteEventually()
+                    }
+                }
+            })
+            
+            //delete the post hashtags from the server
+            let hashtagQuery = PFQuery(className: "hashtags")
+            hashtagQuery.whereKey("toComment", equalTo: cell.uuidLabel.text!)
+            hashtagQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                if error == nil {
+                    for object in objects! {
+                        object.deleteEventually()
+                    }
+                }
+            })
+        }
+        
+        //define a menu that will be shown when the button is pressed
+        let menu = UIAlertController(title: "More options", message: nil, preferredStyle: .actionSheet)
+        //add a cancel option
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        //assign the available actions to the menu
+        menu.addAction(delete)
+        menu.addAction(cancel)
+        
+        //present the menu with the options
+        self.present(menu, animated: true, completion: nil)
+    }
+    
 }

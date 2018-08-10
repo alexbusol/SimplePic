@@ -36,8 +36,7 @@ class HomeScreenViewController: UICollectionViewController {
         toRefresh.addTarget(self, action: #selector(HomeScreenViewController.refresh), for: UIControlEvents.valueChanged)
         collectionView?.addSubview(toRefresh)
     
-        //receiving notification from UploadViewController
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeScreenViewController.updateCollectionView), name: NSNotification.Name(rawValue: "uploadedPost"), object: nil)
+       
         //receiving notification from post view controller after post deletion
         NotificationCenter.default.addObserver(self, selector: #selector(HomeScreenViewController.updateCollectionView), name: NSNotification.Name(rawValue: "deletedPost"), object: nil)
         

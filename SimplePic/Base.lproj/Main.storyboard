@@ -1131,7 +1131,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <state key="normal" title="username"/>
                                             <connections>
-                                                <action selector="username_pressed:" destination="dSQ-E8-dm9" eventType="touchUpInside" id="7iQ-dB-jAG"/>
+                                                <action selector="username_pressed:" destination="dSQ-E8-dm9" eventType="touchUpInside" id="6Zh-Dv-Dxk"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PostDate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5xI-xk-ETJ">
@@ -1154,7 +1154,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Comment" image="chat"/>
                                             <connections>
-                                                <action selector="commentButton_pressed:" destination="dSQ-E8-dm9" eventType="touchUpInside" id="fqV-fm-nMW"/>
+                                                <action selector="commentButton_pressed:" destination="dSQ-E8-dm9" eventType="touchUpInside" id="dBc-S8-baE"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ojX-cZ-MsT">
@@ -1176,7 +1176,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="More" image="more"/>
                                             <connections>
-                                                <action selector="moreButton_pressed:" destination="dSQ-E8-dm9" eventType="touchUpInside" id="tZb-ZV-9k9"/>
+                                                <action selector="moreButton_pressed:" destination="dSQ-E8-dm9" eventType="touchUpInside" id="kWG-p2-Uv2"/>
                                             </connections>
                                         </button>
                                     </subviews>

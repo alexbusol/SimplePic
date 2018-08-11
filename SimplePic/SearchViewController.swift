@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class SearchViewController: UITableViewController, UISearchBarDelegate {
+class SearchViewController: UITableViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     //declare the search bar 
     var searchBar = UISearchBar()
@@ -21,6 +21,11 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     var postImageArray = [PFFile]()
     var postDescriptionArray = [String]()
     var UUIDArray = [String]()
+    var imageArray = [PFFile]()
+    var pageSize : Int = 15
+    //declare collection view to be used in displaying popular posts
+    var collectionView : UICollectionView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +40,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         self.navigationItem.leftBarButtonItem = searchItem
         
         loadUsers()
+        collectionViewLaunch()
     }
     
     //MARK: - Load some initial users into the table view
@@ -113,12 +119,18 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     
     //tapped on the searchBar
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        //show the image grid with recent posts of other users if the search bar wasnt pressed
+        collectionView.isHidden = true
+        
         //show the cancel button
         searchBar.showsCancelButton = true
     }
     
     //tapped on the search bar cancel button
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        //hide the image grid
+        collectionView.isHidden = false
+        
         //dismiss the keyboard
         searchBar.resignFirstResponder()
         searchBar.text = ""
@@ -172,6 +184,116 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    
+    //MARK: - Setting up collection view for displaying popular posts
+    func collectionViewLaunch() {
+        
+        let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
+        layout.itemSize = CGSize(width: self.view.frame.size.width / 3, height: self.view.frame.size.width / 3)
+        
+        layout.scrollDirection = UICollectionViewScrollDirection.vertical
+        
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height - self.tabBarController!.tabBar.frame.size.height - self.navigationController!.navigationBar.frame.size.height - 20)
+        
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .white
+        self.view.addSubview(collectionView)
+        
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        
+        loadPosts()
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageArray.count
+    }
+    
+    //MARK: - Place post image into a collection view cell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        
+        let cellImage = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.size.width, height: cell.frame.size.height))
+        cell.addSubview(cellImage)
+        
+        imageArray[indexPath.row].getDataInBackground { (data, error) -> Void in
+            if error == nil {
+                cellImage.image = UIImage(data: data!)
+            } else {
+                print(error!.localizedDescription)
+            }
+        }
+        
+        return cell
+    }
+    
+    //MARK: - If one of the collection cells is selected
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        //place the uuid of the post into the global UUID array in the post view controller
+        postToLoadUUID.append(UUIDArray[indexPath.row])
+        
+        //present PostViewController with the selected image
+        let post = self.storyboard?.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+        self.navigationController?.pushViewController(post, animated: true)
+    }
+    
+    //Load posts into the image grid
+    func loadPosts() {
+        let query = PFQuery(className: "posts")
+        query.limit = pageSize
+        query.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                
+                self.imageArray.removeAll(keepingCapacity: false)
+                self.UUIDArray.removeAll(keepingCapacity: false)
+                
+                for object in objects! {
+                    self.imageArray.append(object.object(forKey: "pic") as! PFFile)
+                    self.UUIDArray.append(object.object(forKey: "uuid") as! String)
+                }
+
+                self.collectionView.reloadData()
+                
+            } else {
+                print(error!.localizedDescription)
+            }
+        }
+    }
+    
+    //load more posts if scrolled to the bottom and there are more posts left to display
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= scrollView.contentSize.height / 6 {
+            self.loadAdditionalPosts()
+        }
+    }
+    
+    func loadAdditionalPosts() {
+        
+        if pageSize <= imageArray.count {
+            
+            //increase the page size
+            pageSize = pageSize + 15
+            
+            //load additional posts
+            loadPosts()
+            
+        }
+        
+    }
     
 
 }

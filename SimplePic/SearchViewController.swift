@@ -76,7 +76,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
                 if objects!.isEmpty {
                     
                     let fullnameQuery = PFUser.query()
-                    fullnameQuery?.whereKey("fullname", matchesRegex: "(?i)" + self.searchBar.text!)
+                    fullnameQuery?.whereKey("FullName", matchesRegex: "(?i)" + self.searchBar.text!)
                     fullnameQuery?.findObjectsInBackground(block: { (objects, error) -> Void in
                         if error == nil {
 
@@ -127,5 +127,51 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         
         loadUsers()
     }
+    
+    
+    //MARK: - Table View methods
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return usernameArray.count
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.view.frame.size.width / 4
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! FollowerCell
+        
+        //hide the follow button in the search results
+        cell.followButton.isHidden = true
+        
+        //place data from the server into the FollowerCell items
+        cell.username.text = usernameArray[indexPath.row]
+        avatarArray[indexPath.row].getDataInBackground { (data, error) -> Void in
+            if error == nil {
+                cell.userImage.image = UIImage(data: data!)
+            }
+        }
+        
+        return cell
+    }
+    
+    //if one of the found users was selected
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath) as! FollowerCell
+        
+        //send the user to the right view
+        if cell.username.text! == PFUser.current()?.username {
+            let goHome = self.storyboard?.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+            self.navigationController?.pushViewController(goHome, animated: true)
+        } else {
+            guestUsername.append(cell.username.text!)
+            let goGuest = self.storyboard?.instantiateViewController(withIdentifier: "GuestViewController") as! GuestViewController
+            self.navigationController?.pushViewController(goGuest, animated: true)
+        }
+    }
+    
+    
 
 }

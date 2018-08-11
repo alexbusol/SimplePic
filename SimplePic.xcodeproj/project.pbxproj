@@ -26,6 +26,7 @@
 		E62345F721061FD1009B3D80 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F521061FD0009B3D80 /* Bolts.framework */; };
 		E62345F821061FD1009B3D80 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62345F621061FD1009B3D80 /* Parse.framework */; };
 		E65A0341211DDD170062773B /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A0340211DDD170062773B /* FeedViewController.swift */; };
+		E65A0343211F64910062773B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A0342211F64910062773B /* SearchViewController.swift */; };
 		E66C12132109C95C000CE45E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66C12122109C95C000CE45E /* EditProfileViewController.swift */; };
 		E66C1215210A274B000CE45E /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66C1214210A274B000CE45E /* UploadViewController.swift */; };
 		E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67D20732108A105000DF34A /* FollowersViewController.swift */; };
@@ -67,6 +68,7 @@
 		E62345F521061FD0009B3D80 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		E62345F621061FD1009B3D80 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		E65A0340211DDD170062773B /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		E65A0342211F64910062773B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		E66C12122109C95C000CE45E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		E66C1214210A274B000CE45E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		E67D20732108A105000DF34A /* FollowersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		E62345CD21061DEB009B3D80 /* SimplePic */ = {
 			isa = PBXGroup;
 			children = (
+				E65A0342211F64910062773B /* SearchViewController.swift */,
 				E65A0340211DDD170062773B /* FeedViewController.swift */,
 				E6D6DEFB2118AEF30093A312 /* HashtagViewController.swift */,
 				E6CE89F2211055F600FA9652 /* CommentViewController.swift */,
@@ -265,6 +268,7 @@
 				E67D20762108A136000DF34A /* FollowerCell.swift in Sources */,
 				E62345CF21061DEB009B3D80 /* AppDelegate.swift in Sources */,
 				E61835E0210C74580025C190 /* PostCell.swift in Sources */,
+				E65A0343211F64910062773B /* SearchViewController.swift in Sources */,
 				E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */,
 				E65A0341211DDD170062773B /* FeedViewController.swift in Sources */,
 				E6D6DEFA211882AE0093A312 /* KILabel.m in Sources */,

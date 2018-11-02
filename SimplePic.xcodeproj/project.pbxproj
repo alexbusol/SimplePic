@@ -38,6 +38,8 @@
 		E6B402EF2107998800B4D656 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */; };
 		E6B402F1210799AC00B4D656 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402F0210799AC00B4D656 /* HeaderView.swift */; };
 		E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */; };
+		E6C65FC7218D160900C0482E /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C65FC6218D160900C0482E /* NotificationsViewController.swift */; };
+		E6C65FC9218D163300C0482E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C65FC8218D163300C0482E /* NotificationCell.swift */; };
 		E6CE89F3211055F600FA9652 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE89F2211055F600FA9652 /* CommentViewController.swift */; };
 		E6CE89F52110561F00FA9652 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE89F42110561F00FA9652 /* CommentCell.swift */; };
 		E6D611A5210F18B000D0C5D9 /* NavbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D611A4210F18B000D0C5D9 /* NavbarViewController.swift */; };
@@ -80,6 +82,8 @@
 		E6B402EE2107998800B4D656 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		E6B402F0210799AC00B4D656 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E6B402F221079BAE00B4D656 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		E6C65FC6218D160900C0482E /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		E6C65FC8218D163300C0482E /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		E6CE89F2211055F600FA9652 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		E6CE89F42110561F00FA9652 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		E6D611A4210F18B000D0C5D9 /* NavbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavbarViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				E6D611A4210F18B000D0C5D9 /* NavbarViewController.swift */,
 				E6D611A6210F18D100D0C5D9 /* TabBarViewController.swift */,
 				E6D6DEF7211882AD0093A312 /* SimplePic-Bridging-Header.h */,
+				E6C65FC6218D160900C0482E /* NotificationsViewController.swift */,
+				E6C65FC8218D163300C0482E /* NotificationCell.swift */,
 			);
 			path = SimplePic;
 			sourceTree = "<group>";
@@ -272,7 +278,9 @@
 				E6B402F321079BAE00B4D656 /* CollectionViewCell.swift in Sources */,
 				E65A0341211DDD170062773B /* FeedViewController.swift in Sources */,
 				E6D6DEFA211882AE0093A312 /* KILabel.m in Sources */,
+				E6C65FC9218D163300C0482E /* NotificationCell.swift in Sources */,
 				E67D20782108D033000DF34A /* GuestViewController.swift in Sources */,
+				E6C65FC7218D160900C0482E /* NotificationsViewController.swift in Sources */,
 				E67D20742108A105000DF34A /* FollowersViewController.swift in Sources */,
 				E6A0AB252106465C00C9625F /* ResetPWViewController.swift in Sources */,
 				E6D6DEFC2118AEF30093A312 /* HashtagViewController.swift in Sources */,

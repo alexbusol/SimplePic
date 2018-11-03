@@ -379,7 +379,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         dateArray.append(Date())
         commentArray.append(commentTextField.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
         tableView.reloadData()
-        print("Comment was pressed")
+//        print("Comment was pressed")
         //send the comment to the server
         let commentToSend = PFObject(className: "comments")
         commentToSend["to"] = commentUUID.last
@@ -426,11 +426,11 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             //check if @ was used before a word
             if word.hasPrefix("@") {
                 
-                //remove punctioation characters and other extra symbols
+                //remove punctuation characters and other extra symbols
                 word = word.trimmingCharacters(in: CharacterSet.punctuationCharacters)
                 word = word.trimmingCharacters(in: CharacterSet.symbols)
                 //writing information about new @mention to the database
-                let notificationObject = PFObject(className: "news")
+                let notificationObject = PFObject(className: "notifications")
                 notificationObject["by"] = PFUser.current()?.username
                 notificationObject["to"] = word
                 notificationObject["avatar"] = PFUser.current()?.object(forKey: "avatar") as! PFFile
@@ -441,6 +441,20 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
                 notificationObject.saveEventually()
                 mentionCreated = true
             }
+        }
+        
+        //MARK: - Send a notification to the user if another user left a comment under his post
+        
+        if commentOwner.last != PFUser.current()?.username && mentionCreated == false {
+            let notificationObject = PFObject(className: "notifications")
+            notificationObject["by"] = PFUser.current()?.username
+            notificationObject["avatar"] = PFUser.current()?.object(forKey: "avatar") as! PFFile
+            notificationObject["to"] = commentOwner.last
+            notificationObject["commentOwner"] = commentOwner.last
+            notificationObject["uuid"] = commentUUID.last
+            notificationObject["notification_type"] = "comment"
+            notificationObject["seen"] = "no"
+            notificationObject.saveEventually()
         }
 
         //scroll to bottom of the comment view
@@ -513,6 +527,21 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             hashtagQuery.findObjectsInBackground(block: { (objects, error) -> Void in
                 for object in objects! {
                     object.deleteEventually()
+                }
+            })
+            
+            
+            //remove the existing mentions from the database if the comment is deleted
+            let notificationQuery = PFQuery(className: "notifications")
+            notificationQuery.whereKey("by", equalTo: commentCell.usernameButton.titleLabel!.text!)
+            notificationQuery.whereKey("to", equalTo: commentOwner.last!)
+            notificationQuery.whereKey("uuid", equalTo: commentUUID.last!)
+            notificationQuery.whereKey("notification_type", containedIn: ["comment", "mention"])
+            notificationQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                if error == nil {
+                    for object in objects! {
+                        object.deleteEventually()
+                    }
                 }
             })
             

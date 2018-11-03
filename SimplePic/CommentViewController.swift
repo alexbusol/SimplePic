@@ -87,17 +87,17 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         //getting the current screen's dimensions
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height
-        
-        tableView.frame = CGRect(x: 0, y: 0, width: width, height: height / 1.096 - self.navigationController!.navigationBar.frame.size.height - 20)
+
+        tableView.frame = CGRect(x: 0, y: 0, width: width, height: height / 1.096 - self.navigationController!.navigationBar.frame.size.height - 40)
         tableView.estimatedRowHeight = width / 5.333
         tableView.rowHeight = UITableViewAutomaticDimension
-        
+
         commentTextField.frame = CGRect(x: 10, y: tableView.frame.size.height + height / 56.8, width: width / 1.306, height: 33)
         commentTextField.layer.cornerRadius = commentTextField.frame.size.width / 50
-        
+
         sendButton.frame = CGRect(x: commentTextField.frame.origin.x + commentTextField.frame.size.width + width / 32, y: commentTextField.frame.origin.y, width: width - (commentTextField.frame.origin.x + commentTextField.frame.size.width) - (width / 32) * 2, height: commentTextField.frame.size.height)
-        
-        tableViewHeight = tableView.frame.size.height
+
+        tableViewHeight = tableView.frame.size.height+150
         commentHeight = commentTextField.frame.size.height
         commentYpos = commentTextField.frame.origin.y
     }
@@ -379,7 +379,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
         dateArray.append(Date())
         commentArray.append(commentTextField.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
         tableView.reloadData()
-        
+        print("Comment was pressed")
         //send the comment to the server
         let commentToSend = PFObject(className: "comments")
         commentToSend["to"] = commentUUID.last
@@ -418,7 +418,30 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
             }
         }
         
+        //MARK: - Send a notification to the user when @mention is used
+        var mentionCreated = Bool()
         
+        for var word in commentWords {
+            
+            //check if @ was used before a word
+            if word.hasPrefix("@") {
+                
+                //remove punctioation characters and other extra symbols
+                word = word.trimmingCharacters(in: CharacterSet.punctuationCharacters)
+                word = word.trimmingCharacters(in: CharacterSet.symbols)
+                //writing information about new @mention to the database
+                let notificationObject = PFObject(className: "news")
+                notificationObject["by"] = PFUser.current()?.username
+                notificationObject["to"] = word
+                notificationObject["avatar"] = PFUser.current()?.object(forKey: "avatar") as! PFFile
+                notificationObject["commentOwner"] = commentOwner.last
+                notificationObject["uuid"] = commentUUID.last
+                notificationObject["notification_type"] = "mention"
+                notificationObject["seen"] = "no"
+                notificationObject.saveEventually()
+                mentionCreated = true
+            }
+        }
 
         //scroll to bottom of the comment view
         self.tableView.scrollToRow(at: IndexPath(item: commentArray.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)

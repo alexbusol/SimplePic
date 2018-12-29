@@ -291,13 +291,6 @@ class HomeScreenViewController: UICollectionViewController {
         self.navigationController?.pushViewController(followingVC, animated: true)
     }
     
-    //determining the size of a cell. making sure that we can fit 3 cells on every screen.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: self.view.frame.size.width / 3, height: self.view.frame.size.width / 3)
-        return size
-    }
-    
-    
     //MARK: - Logout the user
     @IBAction func logout_pressed(_ sender: UIBarButtonItem) {
         PFUser.logOutInBackground { (error) in
@@ -336,6 +329,16 @@ class HomeScreenViewController: UICollectionViewController {
         self.navigationController?.pushViewController(postToOpen, animated: true)
         
         
+    }
+    
+}
+
+
+//making sure the screen can fit 3x3 matrix of images
+extension HomeScreenViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.size.width/3, height: self.view.frame.size.width/3)
     }
     
 }

@@ -120,9 +120,9 @@ class HeaderView: UICollectionReusableView {
         profileActionButton.frame = CGRect(x: postsSub.frame.origin.x, y: postsSub.center.y + 20, width: width - postsSub.frame.origin.x - 10, height: 30)
         profileActionButton.layer.cornerRadius = profileActionButton.frame.size.width / 50
         
-        fullNameLabel.frame = CGRect(x: userImage.frame.origin.x, y: userImage.frame.origin.y + userImage.frame.size.height, width: width - 30, height: 30)
-        websiteTextField.frame = CGRect(x: userImage.frame.origin.x - 5, y: fullNameLabel.frame.origin.y + 22, width: width - 30, height: 30)
-        bioLabel.frame = CGRect(x: userImage.frame.origin.x, y: websiteTextField.frame.origin.y + 30, width: width - 30, height: 30)
+        fullNameLabel.frame = CGRect(x: userImage.frame.origin.x,  y: userImage.frame.origin.y + userImage.frame.size.height + 3, width: width - 30, height: 30)
+        websiteTextField.frame = CGRect(x: userImage.frame.origin.x, y: fullNameLabel.frame.origin.y + 25, width: width - 30, height: 30)
+        bioLabel.frame = CGRect(x: userImage.frame.origin.x, y: websiteTextField.frame.origin.y + 35, width: width-23, height: 30)
     }
     
     

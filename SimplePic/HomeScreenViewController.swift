@@ -327,8 +327,6 @@ class HomeScreenViewController: UICollectionViewController {
         //navigate to the PostViewController
         let postToOpen = self.storyboard?.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
         self.navigationController?.pushViewController(postToOpen, animated: true)
-        
-        
     }
     
 }

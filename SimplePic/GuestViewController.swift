@@ -285,7 +285,7 @@ class GuestViewController: UICollectionViewController {
     
     //MARK: - Methods handling posts, followers and following taps
     
-    //when posts are tapped, we down to the bottom, filling the entire screen with posts only
+    //when posts are tapped, we go down to the bottom, filling the entire screen with posts only
     @objc func postsTap() {
         if !pictureArray.isEmpty {
             let indexToScroll = IndexPath(item: 0, section: 0) //index at the top of the picture grid
@@ -316,6 +316,17 @@ class GuestViewController: UICollectionViewController {
         
         //send the user to the followersViewController
         self.navigationController?.pushViewController(followingVC, animated: true)
+    }
+    
+    //MARK: - Open to a certain post
+    //this method gets called when a user selects an image from the collection view in Home/Guest Views
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //pass the UUID of the post that the user selected to the PostViewController
+        postToLoadUUID.append(uuidArray[indexPath.row])
+        
+        //navigate to the PostViewController
+        let postToOpen = self.storyboard?.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+        self.navigationController?.pushViewController(postToOpen, animated: true)
     }
     
 }

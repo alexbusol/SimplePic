@@ -141,6 +141,19 @@ class PostCell: UITableViewCell {
 
                     //send a notification to refresh the Post View and display the new data
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "liked"), object: nil)
+                    
+                    //send notification when post is liked
+                    if self.usernameButton.titleLabel?.text != PFUser.current()?.username { //make sure that post doesnt belong to the same user
+                    let notificationObject = PFObject(className: "notifications")
+                    notificationObject["by"] = PFUser.current()?.username
+                    notificationObject["to"] = self.usernameButton.titleLabel!.text
+                    notificationObject["avatar"] = PFUser.current()?.object(forKey: "avatar") as! PFFile
+                    notificationObject["commentOwner"] = self.usernameButton.titleLabel!.text
+                    notificationObject["uuid"] = self.uuidLabel.text
+                    notificationObject["notification_type"] = "like "
+                    notificationObject["seen"] = "no"
+                    notificationObject.saveEventually()
+                    }
                 } else {
                     print(String(describing: error?.localizedDescription))
                 }
@@ -164,6 +177,20 @@ class PostCell: UITableViewCell {
                            
                             //send a notification to refresh the Post View and display the new data
                             NotificationCenter.default.post(name: Notification.Name(rawValue: "liked"), object: nil)
+                            
+                            //remove the like notification if disliked
+                            let notificationQuery = PFQuery(className: "notifications")
+                            notificationQuery.whereKey("by", equalTo: PFUser.current()!.username!)
+                            notificationQuery.whereKey("to", equalTo: self.usernameButton.titleLabel!.text!)
+                            notificationQuery.whereKey("uuid", equalTo: self.uuidLabel.text!)
+                            notificationQuery.whereKey("notification_type", equalTo: "like" )
+                            notificationQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                                if error == nil {
+                                    for object in objects! {
+                                        object.deleteEventually()
+                                    }
+                                }
+                            })
                             
                         } else {
                             print(String(describing: error?.localizedDescription))

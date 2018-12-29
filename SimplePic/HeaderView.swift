@@ -38,6 +38,17 @@ class HeaderView: UICollectionReusableView {
                 if success {
                     self.profileActionButton.setTitle("Following", for: UIControlState())
                     self.profileActionButton.backgroundColor = .blue
+                    
+                    //send notification if followed
+                    let notificationObject = PFObject(className: "notifications")
+                    notificationObject["by"] = PFUser.current()?.username
+                    notificationObject["to"] = guestUsername.last
+                    notificationObject["avatar"] = PFUser.current()?.object(forKey: "avatar") as! PFFile
+                    notificationObject["commentOwner"] = ""
+                    notificationObject["uuid"] = ""
+                    notificationObject["notification_type"] = "follow"
+                    notificationObject["seen"] = "no"
+                    notificationObject.saveEventually()
                 } else {
                     print("There was an error when trying to follow the user \(error?.localizedDescription)")
                 }
@@ -56,6 +67,20 @@ class HeaderView: UICollectionReusableView {
                             if success {
                                 self.profileActionButton.setTitle("Follow", for: UIControlState())
                                 self.profileActionButton.backgroundColor = .lightGray
+                                
+                                
+                                //delete notification if unfollowed
+                                let notificationQuery = PFQuery(className: "notifications")
+                                notificationQuery.whereKey("by", equalTo: PFUser.current()!.username!)
+                                notificationQuery.whereKey("to", equalTo: guestUsername.last!)
+                                notificationQuery.whereKey("notification_type", equalTo: "follow" )
+                                notificationQuery.findObjectsInBackground(block: { (objects, error) -> Void in
+                                    if error == nil {
+                                        for object in objects! {
+                                            object.deleteEventually()
+                                        }
+                                    }
+                                })
                             } else {
                                 print("unable to delete the user following from the DB \(error?.localizedDescription)")
                             }

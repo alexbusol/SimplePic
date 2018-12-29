@@ -374,6 +374,7 @@ class CommentViewController: UIViewController, UITextViewDelegate, UITableViewDe
     //MARK: - Placing the comment in the CommentView and sending it to the server
     @IBAction func sendButton_pressed(_ sender: UIButton) {
         //Place the newly created comment in the Table View
+        print("SEND BUTTON WAS PRESSED")
         usernameArray.append(PFUser.current()!.username!)
         avatarArray.append(PFUser.current()?.object(forKey: "avatar") as! PFFile)
         dateArray.append(Date())

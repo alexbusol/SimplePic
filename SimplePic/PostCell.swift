@@ -100,7 +100,7 @@ class PostCell: UITableViewCell {
             options: [], metrics: nil, views: ["pic":postImage]))
         
         self.contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-15-[like(30)]-10-[likes]-125-[comment(30)]",
+            withVisualFormat: "H:|-15-[like(30)]-10-[likes]-127-[comment(30)]",
             options: [], metrics: nil, views: ["like":likeButton, "likes":likeNumLabel, "comment":commentButton]))
         
         self.contentView.addConstraints(NSLayoutConstraint.constraints(

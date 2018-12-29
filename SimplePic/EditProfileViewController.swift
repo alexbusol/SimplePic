@@ -288,6 +288,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 //NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
                 
             } else {
+                print("Couldn't save new information")
                 print(error!.localizedDescription)
             }
         })

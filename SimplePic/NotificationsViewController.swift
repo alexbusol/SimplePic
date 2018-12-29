@@ -97,19 +97,19 @@ class NotificationsViewController: UITableViewController {
             cell.dateLabel.text = "now"
         }
         if difference.second! > 0 && difference.minute! == 0 {
-            cell.dateLabel.text = "\(String(describing: difference.second))s."
+            cell.dateLabel.text = "\(difference.second)s."
         }
         if difference.minute! > 0 && difference.hour! == 0 {
-            cell.dateLabel.text = "\(String(describing: difference.minute))m."
+            cell.dateLabel.text = "\(difference.minute)m."
         }
         if difference.hour! > 0 && difference.day! == 0 {
-            cell.dateLabel.text = "\(String(describing: difference.hour))h."
+            cell.dateLabel.text = "\(difference.hour)h."
         }
         if difference.day! > 0 && difference.weekOfMonth! == 0 {
-            cell.dateLabel.text = "\(String(describing: difference.day))d."
+            cell.dateLabel.text = "\(difference.day)d."
         }
         if difference.weekOfMonth! > 0 {
-            cell.dateLabel.text = "\(String(describing: difference.weekOfMonth))w."
+            cell.dateLabel.text = "\(difference.weekOfMonth)w."
         }
         
         //decide what notification information to display

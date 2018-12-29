@@ -158,6 +158,10 @@ class FeedViewController: UITableViewController {
         avatarArray[indexPath.row].getDataInBackground { (data, error) in
             if error == nil {
                 postCell.userAvatar.image = UIImage(data: data!)
+
+            }
+            else {
+                print("Couldnt get poster's avatar")
             }
         }
         postImageArray[indexPath.row].getDataInBackground { (data, error) in

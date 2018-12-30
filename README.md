@@ -8,8 +8,9 @@
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/IMB_iqTVxh.gif?raw=true">
 </p>
-### Some of the supported features include:
+
 <br>
+## Some of the functionality includes:
 <p align="center">
           <b>Adding and removing comments</b>
           </p>
@@ -48,4 +49,4 @@
 </p>
 <br>
 <br>
-##I created this app while learning IOS development. It's not intended to be used for commercial purpose.
+## I created this app while learning IOS development. It's not intended to be used for commercial purpose.

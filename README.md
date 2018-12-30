@@ -11,9 +11,8 @@
 </p>
 
 <br>
-<p align="center">
-    <h2>Some of the functionality includes:</h2>
-</p>
+    <h2 align="center">Some of the functionality includes:</h2>
+
           
 <p align="center">
           <b>Adding and removing comments</b>
@@ -53,4 +52,4 @@
 </p>
 <br>
 <br>
-## I created this app while learning IOS development. It's not intended to be used for commercial purpose.
+<h3 align="center">I created this app while learning IOS development. It's not intended to be used for commercial purpose.</h3>

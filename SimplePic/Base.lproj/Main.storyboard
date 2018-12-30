@@ -1133,7 +1133,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4za-8g-5wA">
                                 <rect key="frame" x="0.0" y="647" width="414" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.22936364619366326" green="0.55925629561583279" blue="0.86203558117614509" alpha="0.85117737676056338" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Publish">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1399,7 +1399,7 @@
         <image name="home" width="37.5" height="37.5"/>
         <image name="more" width="409.60000610351562" height="409.60000610351562"/>
         <image name="notifications" width="37.5" height="37.5"/>
-        <image name="postbg" width="512" height="512"/>
+        <image name="postbg" width="247.40939331054688" height="247.40939331054688"/>
         <image name="search" width="37.5" height="37.5"/>
         <image name="user" width="409.60000610351562" height="409.60000610351562"/>
     </resources>

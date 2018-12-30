@@ -50,7 +50,7 @@ class HeaderView: UICollectionReusableView {
                     notificationObject["seen"] = "no"
                     notificationObject.saveEventually()
                 } else {
-                    print("There was an error when trying to follow the user \(error?.localizedDescription)")
+                    print("There was an error when trying to follow the user \(String(describing: error?.localizedDescription))")
                 }
             })
         } else { //if following -> unfollow routine
@@ -82,13 +82,13 @@ class HeaderView: UICollectionReusableView {
                                     }
                                 })
                             } else {
-                                print("unable to delete the user following from the DB \(error?.localizedDescription)")
+                                print("unable to delete the user following from the DB \(String(describing: error?.localizedDescription))")
                             }
                         })
                     }
                     
                 } else {
-                    print("Unable to unfollow \(error?.localizedDescription)")
+                    print("Unable to unfollow \(String(describing: error?.localizedDescription))")
                     
                 }
             })

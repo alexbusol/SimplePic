@@ -31,7 +31,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         //set a default image if no post image is uploaded
         //can change to something better later
         //now just a placeholder image
-        userPicture.image = UIImage(named: "postbg.jpg")
+        userPicture.image = UIImage(named: "postbg.png")
         
         //hiding the keyboard if the screen is tapped
         let screenTapped = UITapGestureRecognizer(target: self, action: #selector(UploadViewController.hideKeyboardTap))
@@ -69,7 +69,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         //enable the publish button when the picture is successfully selected
         publishButton.isEnabled = true
-        publishButton.backgroundColor = .blue
+        publishButton.backgroundColor = UIColor(red:0.30, green:0.75, blue:0.95, alpha:1.0)
         
         //show the remove button now that the picture is uploaded
         removeButton.isHidden = false
@@ -81,7 +81,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         userPicture.addGestureRecognizer(zoomImage)
     }
     
-    //handles image zoom
+    //handles image zoom. Receives message from the tap gesture recognizer
     @objc func zoomImage() {
         
         //the app change the picture frame sizes depending on if it's zoomed/unzoomed
@@ -154,7 +154,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
             object["title"] = titleTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
         
-        //send the user picked image to the server with compressiong
+        //send the user picked image to the server with compression
         let imageToPost = UIImageJPEGRepresentation(userPicture.image!, 0.5)
         let imageFile = PFFile(name: "post.jpg", data: imageToPost!)
         object["pic"] = imageFile

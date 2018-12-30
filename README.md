@@ -14,17 +14,15 @@
     <h2 align="center">Some of the functionality includes:</h2>
 
           
-<p align="center">
-          <b>Adding and removing comments</b>
-          </p>
+<h3 align="center">Adding and removing comments</h3>
+
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/gif2.gif?raw=true">
 </p>
-                                                                                      
+
 <br>
-<p align="center">
-          <b>Using Hashtags and mentions</b>
-          </p>
+<h3 align="center">Using Hashtags and mentions</h3>
+
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/gif3.gif?raw=true">
 </p>
@@ -33,23 +31,22 @@
 </p>
                                                                                                 
 <br>
-<p align="center">
-          <b>Adding and removing posts</b>
-          </p>
+<h3 align="center">Adding and removing posts</h3>
+
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/gif6.gif?raw=true">
 </p>
                                                                                 
 <br>
-<p align="center">
-          <b>User login and registration</b>
-          </p>
+<h3 align="center">User login and registration</h3>
+
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/gif1.gif?raw=true">
 </p>
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/gif7.gif?raw=true">
 </p>
+
 <br>
 <br>
 <h3 align="center">I created this app while learning IOS development. It's not intended to be used for commercial purpose.</h3>

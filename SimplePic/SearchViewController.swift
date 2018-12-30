@@ -22,7 +22,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate, UICollec
     var postDescriptionArray = [String]()
     var UUIDArray = [String]()
     var imageArray = [PFFile]()
-    var pageSize : Int = 15
+    var pageSize : Int = 25
     //declare collection view to be used in displaying popular posts
     var collectionView : UICollectionView!
 

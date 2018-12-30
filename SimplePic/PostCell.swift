@@ -183,7 +183,7 @@ class PostCell: UITableViewCell {
                             notificationQuery.whereKey("by", equalTo: PFUser.current()!.username!)
                             notificationQuery.whereKey("to", equalTo: self.usernameButton.titleLabel!.text!)
                             notificationQuery.whereKey("uuid", equalTo: self.uuidLabel.text!)
-                            notificationQuery.whereKey("notification_type", equalTo: "like" )
+                            notificationQuery.whereKey("notification_type", equalTo: "like " )
                             notificationQuery.findObjectsInBackground(block: { (objects, error) -> Void in
                                 if error == nil {
                                     for object in objects! {

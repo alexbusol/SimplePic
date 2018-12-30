@@ -24,7 +24,7 @@ class PostViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "test" //change later
+        self.navigationItem.title = "View post" //change later
         self.navigationItem.hidesBackButton = true
         //creating a button that lets the user to go back to a previous screen
         let backButton = UIBarButtonItem(image: UIImage(named: "back.png"), style: .plain, target: self, action: #selector(PostViewController.goBack(_:)))

@@ -97,19 +97,19 @@ class NotificationsViewController: UITableViewController {
             cell.dateLabel.text = "now"
         }
         if difference.second! > 0 && difference.minute! == 0 {
-            cell.dateLabel.text = "\(difference.second)s."
+            cell.dateLabel.text = "\(difference.second!)s."
         }
         if difference.minute! > 0 && difference.hour! == 0 {
-            cell.dateLabel.text = "\(difference.minute)m."
+            cell.dateLabel.text = "\(difference.minute!)m."
         }
         if difference.hour! > 0 && difference.day! == 0 {
-            cell.dateLabel.text = "\(difference.hour)h."
+            cell.dateLabel.text = "\(difference.hour!)h."
         }
         if difference.day! > 0 && difference.weekOfMonth! == 0 {
-            cell.dateLabel.text = "\(difference.day)d."
+            cell.dateLabel.text = "\(difference.day!)d."
         }
         if difference.weekOfMonth! > 0 {
-            cell.dateLabel.text = "\(difference.weekOfMonth)w."
+            cell.dateLabel.text = "\(difference.weekOfMonth!)w."
         }
         
         //decide what notification information to display
@@ -122,7 +122,7 @@ class NotificationsViewController: UITableViewController {
         if typeArray[indexPath.row] == "follow" {
             cell.informationLabel.text = " is now following you."
         }
-        if typeArray[indexPath.row] == "like" {
+        if typeArray[indexPath.row] == "like " {
             cell.informationLabel.text = " liked your post."
         }
         

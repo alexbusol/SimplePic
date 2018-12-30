@@ -10,7 +10,11 @@
 </p>
 
 <br>
-## Some of the functionality includes:
+<p align="center">
+          
+          <h2><b>Some of the functionality includes:</b></h2>
+          </p>
+          
 <p align="center">
           <b>Adding and removing comments</b>
           </p>

@@ -5,15 +5,15 @@
 <p align="center">
           <b>SimplePic is a fully functional Instagram-like application</b>
           </p>
+          
 <p align="center">
   <img src=https://github.com/alexbusol/SimplePic/blob/master/IMB_iqTVxh.gif?raw=true">
 </p>
 
 <br>
 <p align="center">
-          
-          <h2><b>Some of the functionality includes:</b></h2>
-          </p>
+    <h2>Some of the functionality includes:</h2>
+</p>
           
 <p align="center">
           <b>Adding and removing comments</b>
